@@ -13,12 +13,30 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import { Badge } from "@mui/material";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Link from "next/link";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const pages = ["Home", "District", "Places"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const settings = [
+  {
+    label: "Profile",
+    link: "/profile",
+  },
+  {
+    label: "Dashboard",
+    link: "/dashboard",
+  },
+  {
+    label: "Login",
+    link: "/auth/login",
+  },
+  {
+    label: "Signup",
+    link: "/auth/signup",
+  },
+];
 
 const Navbar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -142,8 +160,12 @@ const Navbar = () => {
               </Badge>
             </IconButton>
             <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+              <IconButton
+                color="inherit"
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0 }}
+              >
+                <AccountCircleIcon />
               </IconButton>
             </Tooltip>
 
@@ -164,8 +186,10 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                  <Link href={setting.link}>
+                    <Typography textAlign="center">{setting.label}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
