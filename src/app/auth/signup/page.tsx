@@ -1,7 +1,6 @@
 "use client";
 
 import Form from "@/components/Form/Form";
-import FormInput from "@/components/Form/FormInput";
 import Navbar from "@/components/Navbar/page";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import { Divider } from "@mui/material";
@@ -12,12 +11,14 @@ import { getUserInfo, storeUserInfo } from "@/services/auth.services";
 import { useRouter } from "next/navigation";
 import { UserInfoProps } from "@/types";
 import Swal from "sweetalert2";
+import Link from "next/link";
+import FormInput from "@/components/Form/FormInput";
 
 const Signup = () => {
   const [userSignup] = useUserSignupMutation();
   const { role } = getUserInfo() as UserInfoProps;
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
+  role && router.push(`/profile`);
 
   const onSubmit = async (data: any) => {
     try {
@@ -29,11 +30,7 @@ const Signup = () => {
           "success"
         );
         storeUserInfo({ accessToken: res?.accessToken });
-        setLoading(!loading);
-        if (role) {
-          router.push(`/profile`);
-          setLoading(!loading);
-        }
+        router.push(`/profile`);
       }
     } catch (error: any) {
       Swal.fire("Signup failed!", error.message, "error");
@@ -74,6 +71,15 @@ const Signup = () => {
               </div>
             </div>
           </Form>
+
+          <Divider className="my-4" />
+          <div>
+            <Link href="/forget-password">Forget password?</Link>
+          </div>
+
+          <div>
+            <Link href="/auth/login">Have you any account?</Link>
+          </div>
         </div>
       </section>
     </div>

@@ -38,24 +38,21 @@ const FormInput = ({
     formState: { errors },
   } = useFormContext();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
+   const [showPassword, setShowPassword] = useState(false);
+   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
+   const handleMouseDownPassword = (
+     event: React.MouseEvent<HTMLButtonElement>
+   ) => {
+     event.preventDefault();
+   };
 
-  const errorMessage = getErrorMessageByPropertyName(errors, name);
+   const errorMessage = getErrorMessageByPropertyName(errors, name);
 
   return (
     <>
       {label ? (
-        <InputLabel
-          className="text-white"
-          htmlFor="standard-adornment-password"
-        >
+        <InputLabel className="text-white" htmlFor={name}>
           {label}
         </InputLabel>
       ) : null}
