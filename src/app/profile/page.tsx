@@ -4,16 +4,27 @@ import Navbar from "@/components/Navbar/page";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import { useGetProfileQuery } from "@/redux/api/UserApi";
 import { isLoggedIn } from "@/services/auth.services";
-import { Avatar, Divider } from "@mui/material";
+import { Avatar, Divider, Popover, Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
 
 const Profile = () => {
+  const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const { data, isLoading } = useGetProfileQuery({});
   const isUserLogIn = isLoggedIn();
   const router = useRouter();
+
+  const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
 
   if (isLoading) {
     <p>Loading....</p>;
@@ -29,6 +40,37 @@ const Profile = () => {
       <section className={`flex justify-center items-center min-h-screen`}>
         {data && (
           <div className="p-10 text-black backdrop-blur-3xl rounded-2xl w-[300px] md:w-[400px] lg:w-[600px] shadow-md">
+            <div className="flex justify-start items-start">
+              <Link
+                aria-owns={open ? "mouse-over-popover" : undefined}
+                aria-haspopup="true"
+                onMouseEnter={handlePopoverOpen}
+                onMouseLeave={handlePopoverClose}
+                href="/profile/edit"
+              >
+                <EditIcon/>
+              </Link>
+              <Popover
+                id="mouse-over-popover"
+                sx={{
+                  pointerEvents: "none",
+                }}
+                open={open}
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+                onClose={handlePopoverClose}
+                disableRestoreFocus
+              >
+                <Typography sx={{ p: 1 }}>Update profile</Typography>
+              </Popover>
+            </div>
             <div className="my-4 text-black flex flex-col justify-center items-center">
               <Avatar
                 alt="Remy Sharp"
@@ -39,11 +81,6 @@ const Profile = () => {
               {data?.Profile[0]?.bio && (
                 <p className="my-1">{data?.Profile[0]?.bio}</p>
               )}
-              <Link href="/profile/edit">
-                <ButtonComponent endIcon={<EditIcon />}>
-                  Update profile
-                </ButtonComponent>
-              </Link>
             </div>
             <Divider className="my-4" />
             <div className="text-2xl md:text-3xl font-bold gap-3 w-full flex justify-center my-2">
