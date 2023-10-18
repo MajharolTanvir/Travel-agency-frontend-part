@@ -33,7 +33,6 @@ const Login = () => {
         router.push(`/profile`);
       }
     } catch (error: any) {
-      console.log(error);
       Swal.fire("Login failed!", error?.message, "error");
     }
   };
@@ -66,7 +65,9 @@ const Login = () => {
           </Form>
 
           <Divider className="my-4" />
-
+          <div>
+            <Link href="/auth/forget-password">Forget password?</Link>
+          </div>
           <div className="my-1">
             <Link href="/auth/signup">Create new account?</Link>
           </div>

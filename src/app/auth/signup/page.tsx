@@ -74,10 +74,6 @@ const Signup = () => {
 
           <Divider className="my-4" />
           <div>
-            <Link href="/forget-password">Forget password?</Link>
-          </div>
-
-          <div>
             <Link href="/auth/login">Have you any account?</Link>
           </div>
         </div>
