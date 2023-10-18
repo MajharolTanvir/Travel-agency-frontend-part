@@ -104,40 +104,42 @@ const ManageUser = () => {
             )}
           </div>
         </div>
-        {data && <TableComponent
-          columns={columns}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-          limit={limit}
-          page={page}
-          meta={meta}
-        >
-          {users?.map((user: any) => (
-            <TableRow
-              key={user?.id}
-              sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-            >
-              <TableCell align="center">{user?.firstName}</TableCell>
-              <TableCell align="center">
-                {(user?.middleName && user?.middleName) || ""}
-              </TableCell>
-              <TableCell align="center"> {user?.lastName}</TableCell>
-              <TableCell align="center">{user?.email}</TableCell>
-              <TableCell align="center">{user?.role}</TableCell>
+        {data && (
+          <TableComponent
+            columns={columns}
+            handleChangePage={handleChangePage}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+            limit={limit}
+            page={page}
+            meta={meta}
+          >
+            {users?.map((user: any) => (
+              <TableRow
+                key={user?.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell align="center">{user?.firstName}</TableCell>
+                <TableCell align="center">
+                  {(user?.middleName && user?.middleName) || ""}
+                </TableCell>
+                <TableCell align="center"> {user?.lastName}</TableCell>
+                <TableCell align="center">{user?.email}</TableCell>
+                <TableCell align="center">{user?.role}</TableCell>
 
-              <TableCell align="center">
-                <span className="flex gap-4 justify-center items-center">
-                  <Link
-                    href={`/dashboard/BloodDonor/appointment/${user?.id}`}
-                    className="text-blue-500 text-xl"
-                  >
-                    <RemoveRedEyeIcon />
-                  </Link>
-                </span>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableComponent>}
+                <TableCell align="center">
+                  <span className="flex gap-4 justify-center items-center">
+                    <Link
+                      href={`/super-admin/manage-users/details/${user?.id}`}
+                      className="text-blue-500 text-xl"
+                    >
+                      <RemoveRedEyeIcon />
+                    </Link>
+                  </span>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableComponent>
+        )}
       </DetailsTab>
     </div>
   );

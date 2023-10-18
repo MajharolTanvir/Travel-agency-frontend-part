@@ -16,7 +16,7 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 const ManageAdmin = () => {
   const query: Record<string, any> = {};
 
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(0);
   const [limit, setLimit] = useState<number>(10);
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
@@ -123,7 +123,7 @@ const ManageAdmin = () => {
                 <TableCell align="center">
                   <span className="flex gap-4 justify-center items-center">
                     <Link
-                      href={`/dashboard/BloodDonor/appointment/${user?.id}`}
+                      href={`/super-admin/manage-admins/details/${user?.id}`}
                       className="text-blue-500 text-xl"
                     >
                       <RemoveRedEyeIcon />
