@@ -3,84 +3,68 @@
 import Form from "@/components/Form/Form";
 import FormInput from "@/components/Form/FormInput";
 import FormSelectFields from "@/components/Form/FormSelectField";
+import FormTextArea from "@/components/Form/FormTextArea";
 import ImageUpload from "@/components/Form/UploadSingleImage";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import DetailsTab from "@/components/UI/detailsTab";
-import {
-  useGetSingleDistrictQuery,
-  useUpdatedDistrictMutation,
-} from "@/redux/api/DistrictApi";
+import { useGetAllDistrictQuery } from "@/redux/api/DistrictApi";
 import { useGetAllDivisionQuery } from "@/redux/api/DivisionApi";
+import { useCreatePlaceMutation } from "@/redux/api/PlaceApi";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
-type IDProps = {
-  params: any;
-};
-
-const UpdateDivision = ({ params }: IDProps) => {
+const CreatePlace = () => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
-  const { id } = params;
-  const [updateDistrict] = useUpdatedDistrictMutation();
-  const { data, isLoading } = useGetSingleDistrictQuery(id);
-  const { data: divisionData } = useGetAllDivisionQuery({});
+  const [createPlace] = useCreatePlaceMutation();
+  const { data, isLoading } = useGetAllDistrictQuery({});
 
   if (isLoading) {
-    <p>Loading..........</p>;
+    <p>Loading.............</p>;
   }
 
-  const divisions = divisionData?.division;
-  const divisionOptions = divisions?.map((division: any) => {
+  const districts = data?.district;
+  //@ts-ignore
+  const districtOptions = districts?.map((district) => {
     return {
-      label: division?.title,
-      value: division?.id,
+      //@ts-ignore
+      label: district?.title,
+      //@ts-ignore
+      value: district?.id,
     };
   });
 
-  const onSubmit = async (values: any) => {
-    values.districtImage = imageUrl && imageUrl;
-    const data = {
-      id: id,
-      values: values,
-    };
+  const onSubmit = async (data: any) => {
+    data.placeImage = imageUrl && imageUrl;
+
     try {
-      const res = await updateDistrict(data);
-      if (!!res) {
-        Swal.fire(
-          "District Updated!",
-          "District updated successfully!",
-          "success"
-        );
+      const res = await createPlace(data).unwrap();
+      if (res.id) {
+        Swal.fire("Place Created!", "Place created successfully!", "success");
       }
     } catch (error: any) {
       Swal.fire("Signup failed!", error.message, "error");
     }
   };
-
-  const defaultValues = {
-    title: data?.title || "",
-  };
-
   return (
     <div>
       <div className="md:flex justify-between items-center">
         <BreadcrumbsComponent
           items={[
             {
-              label: "Super-Admin",
-              link: "/super-admin",
+              label: "Admin",
+              link: "/admin",
             },
             {
-              label: "Manage district",
-              link: "/super-admin/district",
+              label: "Manage place",
+              link: "/admin/place",
             },
           ]}
         />
       </div>
-      <DetailsTab title="Update district">
+      <DetailsTab title="Create place">
         <div>
-          <Form submitHandler={onSubmit} defaultValues={defaultValues}>
+          <Form submitHandler={onSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 justify-start items-start gap-5">
               <div>
                 <FormInput
@@ -92,18 +76,23 @@ const UpdateDivision = ({ params }: IDProps) => {
               </div>
               <div>
                 <FormSelectFields
-                  name="divisionId"
-                  label="Division"
-                  options={divisionOptions}
+                  name="districtId"
+                  label="District"
+                  options={districtOptions}
                   size="large"
-                  placeholder={data?.division?.title}
+                  placeholder="Select district"
                 />
               </div>
+
               <div>
                 <ImageUpload
                   imageUrl={imageUrl}
                   setImageUrl={setImageUrl}
                 ></ImageUpload>
+              </div>
+
+              <div>
+                <FormTextArea rows={4} name="description" label="Description" />
               </div>
             </div>
 
@@ -117,4 +106,4 @@ const UpdateDivision = ({ params }: IDProps) => {
   );
 };
 
-export default UpdateDivision;
+export default CreatePlace;

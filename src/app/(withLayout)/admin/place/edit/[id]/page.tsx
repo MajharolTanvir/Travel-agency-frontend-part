@@ -3,15 +3,16 @@
 import Form from "@/components/Form/Form";
 import FormInput from "@/components/Form/FormInput";
 import FormSelectFields from "@/components/Form/FormSelectField";
+import FormTextArea from "@/components/Form/FormTextArea";
 import ImageUpload from "@/components/Form/UploadSingleImage";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import DetailsTab from "@/components/UI/detailsTab";
+import { useGetAllDistrictQuery } from "@/redux/api/DistrictApi";
 import {
-  useGetSingleDistrictQuery,
-  useUpdatedDistrictMutation,
-} from "@/redux/api/DistrictApi";
-import { useGetAllDivisionQuery } from "@/redux/api/DivisionApi";
+  useGetSinglePlaceQuery,
+  useUpdatedPlaceMutation,
+} from "@/redux/api/PlaceApi";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -19,39 +20,34 @@ type IDProps = {
   params: any;
 };
 
-const UpdateDivision = ({ params }: IDProps) => {
+const UpdatePlace = ({ params }: IDProps) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const { id } = params;
-  const [updateDistrict] = useUpdatedDistrictMutation();
-  const { data, isLoading } = useGetSingleDistrictQuery(id);
-  const { data: divisionData } = useGetAllDivisionQuery({});
+  const [updatePlace] = useUpdatedPlaceMutation();
+  const { data, isLoading } = useGetSinglePlaceQuery(id);
+  const { data: districtData } = useGetAllDistrictQuery({});
 
   if (isLoading) {
     <p>Loading..........</p>;
   }
 
-  const divisions = divisionData?.division;
-  const divisionOptions = divisions?.map((division: any) => {
+  const districts = districtData?.district;
+  const districtOptions = districts?.map((district: any) => {
     return {
-      label: division?.title,
-      value: division?.id,
+      label: district?.title,
+      value: district?.id,
     };
   });
 
   const onSubmit = async (values: any) => {
-    values.districtImage = imageUrl && imageUrl;
     const data = {
       id: id,
       values: values,
     };
     try {
-      const res = await updateDistrict(data);
+      const res = await updatePlace(data);
       if (!!res) {
-        Swal.fire(
-          "District Updated!",
-          "District updated successfully!",
-          "success"
-        );
+        Swal.fire("Place Updated!", "Place updated successfully!", "success");
       }
     } catch (error: any) {
       Swal.fire("Signup failed!", error.message, "error");
@@ -60,6 +56,7 @@ const UpdateDivision = ({ params }: IDProps) => {
 
   const defaultValues = {
     title: data?.title || "",
+    description: data?.description || "",
   };
 
   return (
@@ -68,17 +65,17 @@ const UpdateDivision = ({ params }: IDProps) => {
         <BreadcrumbsComponent
           items={[
             {
-              label: "Super-Admin",
-              link: "/super-admin",
+              label: "Admin",
+              link: "/admin",
             },
             {
-              label: "Manage district",
-              link: "/super-admin/district",
+              label: "Manage Place",
+              link: "/admin/place",
             },
           ]}
         />
       </div>
-      <DetailsTab title="Update district">
+      <DetailsTab title="Update Place">
         <div>
           <Form submitHandler={onSubmit} defaultValues={defaultValues}>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 justify-start items-start gap-5">
@@ -92,11 +89,11 @@ const UpdateDivision = ({ params }: IDProps) => {
               </div>
               <div>
                 <FormSelectFields
-                  name="divisionId"
-                  label="Division"
-                  options={divisionOptions}
+                  name="districtId"
+                  label="District"
+                  options={districtOptions}
                   size="large"
-                  placeholder={data?.division?.title}
+                  placeholder={data?.district?.title}
                 />
               </div>
               <div>
@@ -104,6 +101,10 @@ const UpdateDivision = ({ params }: IDProps) => {
                   imageUrl={imageUrl}
                   setImageUrl={setImageUrl}
                 ></ImageUpload>
+              </div>
+
+              <div>
+                <FormTextArea rows={4} name="description" label="Description" />
               </div>
             </div>
 
@@ -117,4 +118,4 @@ const UpdateDivision = ({ params }: IDProps) => {
   );
 };
 
-export default UpdateDivision;
+export default UpdatePlace;
