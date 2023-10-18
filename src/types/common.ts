@@ -36,14 +36,18 @@ export interface Column {
 }
 
 export interface IDivision {
-  data?: any;
-  meta?: any;
+  id: any;
+  title: any;
+  createdAt: any;
+  updatedAt: any;
 }
 
 export interface IDistrict {
-  [x: string]: any;
-  data?: any;
-  meta?: any;
+  id: string;
+  title: string;
+  districtImage: string;
+  createdAt: any;
+  updatedAt: any;
 }
 
 export interface IPlace {

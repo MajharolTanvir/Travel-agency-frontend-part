@@ -1,22 +1,23 @@
 "use client";
 
+import { useDebounced } from "@/redux/hook";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
-  useDeleteDivisionMutation,
-  useGetAllDivisionQuery,
-} from "@/redux/api/DivisionApi";
-import { useDebounced } from "@/redux/hook";
-import ButtonComponent from "@/components/UI/buttonComponent";
+  useDeleteDistrictMutation,
+  useGetAllDistrictQuery,
+} from "@/redux/api/DistrictApi";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
-import { Input, TableCell, TableRow } from "@mui/material";
-import TableComponent from "@/components/UI/tableComponent";
-import DeleteIcon from "@mui/icons-material/Delete";
+import { Avatar, Input, TableCell, TableRow } from "@mui/material";
+import ButtonComponent from "@/components/UI/buttonComponent";
 import CachedIcon from "@mui/icons-material/Cached";
+import TableComponent from "@/components/UI/tableComponent";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
-const Division = () => {
+const District = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -24,7 +25,7 @@ const Division = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [deleteDivision] = useDeleteDivisionMutation();
+  const [deleteDistrict] = useDeleteDistrictMutation();
 
   query["limit"] = limit;
   query["page"] = page;
@@ -40,25 +41,26 @@ const Division = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllDivisionQuery({ ...query });
+  const { data, isLoading } = useGetAllDistrictQuery({ ...query });
 
   if (isLoading) {
     return <p>Loading......</p>;
   }
 
   //@ts-ignore
-  const divisions = data?.division;
+  const districts = data?.district;
   //@ts-ignore
   const meta = data?.meta;
 
   const columns: any = [
     { id: "title", label: "Division name" },
+    { id: "districtImage", label: "District Image" },
     { id: "createdAt", label: "Created At" },
     { id: "action", label: "Action" },
   ];
 
   const handleDelete = (id: string) => {
-    deleteDivision(id);
+    deleteDistrict(id);
   };
 
   const handleChangePage = (
@@ -91,7 +93,7 @@ const Division = () => {
           },
         ]}
       />
-      <DetailsTab title="Manage Division">
+      <DetailsTab title="Manage District">
         <div className="md:flex justify-between items-center gap-5 mb-5">
           <Input
             placeholder="Search"
@@ -100,10 +102,9 @@ const Division = () => {
               width: "20%",
             }}
           />
-
           <div className="flex justify-between items-center gap-2">
-            <Link href="/super-admin/division/create-division">
-              <ButtonComponent>Create division</ButtonComponent>
+            <Link href="/super-admin/district/create-district">
+              <ButtonComponent>Create district</ButtonComponent>
             </Link>
             {(!!sortBy || !!sortOrder || !!searchTerm) && (
               <ButtonComponent onclick={resetFilters}>
@@ -121,23 +122,37 @@ const Division = () => {
             page={page}
             meta={meta}
           >
-            {divisions?.map((division: any) => (
+            {districts?.map((district: any) => (
               <TableRow
-                key={division?.id}
+                key={district?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{division?.title}</TableCell>
-                <TableCell align="center">{division?.createdAt}</TableCell>
+                <TableCell align="center">{district?.title}</TableCell>
+                <TableCell align="center" className="flex justify-center items-center">
+                  <Avatar
+                    alt="Remy Sharp"
+                    src={district?.districtImage}
+                    sx={{ width: 56, height: 56 }}
+                  />
+                </TableCell>
+
+                <TableCell align="center">{district?.createdAt}</TableCell>
 
                 <TableCell align="center">
                   <span className="flex gap-4 justify-center items-center">
+                    {/* <Link
+                      href={`/super-admin/district/details/${district?.id}`}
+                      className="text-blue-500 text-xl"
+                    >
+                      <RemoveRedEyeIcon />
+                    </Link> */}
                     <Link
-                      href={`/super-admin/division/edit/${division?.id}`}
+                      href={`/super-admin/district/edit/${district?.id}`}
                       className="text-blue-500 text-xl"
                     >
                       <EditIcon />
                     </Link>
-                    <ButtonComponent onclick={() => handleDelete(division?.id)}>
+                    <ButtonComponent onclick={() => handleDelete(district?.id)}>
                       <DeleteIcon />
                     </ButtonComponent>
                   </span>
@@ -151,4 +166,4 @@ const Division = () => {
   );
 };
 
-export default Division;
+export default District;

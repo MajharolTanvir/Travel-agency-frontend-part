@@ -1,66 +1,116 @@
-"use client";
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import NativeSelect from "@mui/material/NativeSelect";
+import InputBase from "@mui/material/InputBase";
+import { Controller, useFormContext } from "react-hook-form";
+import { getErrorMessageByPropertyName } from "@/utils/schemaValidation";
 
-import { InputLabel, NativeSelect } from "@mui/material";
-import { useFormContext, Controller } from "react-hook-form";
-
-export interface ISelectFieldOptions {
-  label: string;
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  "label + &": {
+    marginTop: theme.spacing(3),
+  },
+  "& .MuiInputBase-input": {
+    borderRadius: 4,
+    position: "relative",
+    backgroundColor: theme.palette.background.paper,
+    border: "1px solid #ced4da",
+    fontSize: 16,
+    padding: "10px 26px 10px 12px",
+    transition: theme.transitions.create(["border-color", "box-shadow"]),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+    "&:focus": {
+      borderRadius: 4,
+      borderColor: "#80bdff",
+      boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
+    },
+  },
+}));
+interface IOptions {
   value: string;
+  label: string;
 }
-
-export interface ISelectField {
-  options: ISelectFieldOptions[];
+interface IInput {
   name: string;
   type?: string;
-  value?: string | string[] | undefined;
+  size?: string;
+  options?: IOptions[];
   id?: string;
   placeholder?: string;
   validation?: object;
   label?: string;
-  defaultValue?: ISelectFieldOptions;
-  handleChange?: (el: string) => void;
 }
 
-const FormSelectFields = ({
+export default function FormSelectFields({
   name,
+  type,
+  size,
+  id,
   placeholder,
+  validation,
   options,
   label,
-  defaultValue,
-  handleChange,
-}: ISelectField) => {
-  const { control } = useFormContext();
+}: IInput) {
+  const [age, setAge] = React.useState("");
+  const handleChange = (event: { target: { value: string } }) => {
+    setAge(event.target.value);
+  };
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
+
+  const errorMessage = getErrorMessageByPropertyName(errors, name);
   return (
-    <>
+    <div>
       {label ? (
-        <InputLabel className="text-white" htmlFor={name}>
+        <InputLabel
+          id="demo-simple-select-standard-label"
+          className="text-[#485563] mt-2"
+          htmlFor={name}
+        >
           {label}
         </InputLabel>
       ) : null}
       <Controller
-        control={control}
         name={name}
+        control={control}
         render={({ field: { value, onChange } }) => (
-          <NativeSelect
-            className="flex flex-row text-black my-2 pb-.5"
-            defaultValue={defaultValue}
-            inputProps={{
-              name: placeholder,
-            }}
-            value={value}
-            placeholder={placeholder}
-            onChange={handleChange ? handleChange : onChange}
-          >
-            {options.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </NativeSelect>
+          <FormControl className="w-full" variant="standard">
+            <Select
+              placeholder={placeholder}
+              autoFocus={true}
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={value}
+              onChange={onChange}
+              input={<BootstrapInput />}
+            >
+              {options?.map((op, i) => (
+                <MenuItem key={i} value={op.value}>
+                  {op.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         )}
-      />
-    </>
+      ></Controller>
+      <p className="text-red-500">{errorMessage}</p>
+    </div>
   );
-};
-
-export default FormSelectFields;
+}
