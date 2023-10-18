@@ -3,11 +3,6 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import HomeIcon from "@mui/icons-material/Home";
 
-function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-  event.preventDefault();
-  console.info("You clicked a breadcrumb.");
-}
-
 const BreadcrumbsComponent = ({
   items,
 }: {
@@ -17,7 +12,7 @@ const BreadcrumbsComponent = ({
   }[];
 }) => {
   return (
-    <div role="presentation" onClick={handleClick} className="my-5">
+    <div role="presentation" className="my-5">
       <Breadcrumbs aria-label="breadcrumb">
         <Link
           underline="hover"

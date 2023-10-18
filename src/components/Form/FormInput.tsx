@@ -52,7 +52,7 @@ const FormInput = ({
   return (
     <>
       {label ? (
-        <InputLabel className="text-white mt-2" htmlFor={name}>
+        <InputLabel className="text-[#485563] mt-2" htmlFor={name}>
           {label}
         </InputLabel>
       ) : null}

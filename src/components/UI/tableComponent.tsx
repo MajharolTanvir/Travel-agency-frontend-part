@@ -16,8 +16,8 @@ const TableComponent = ({
   limit,
   page,
   meta,
-    columns,
-  children
+  columns,
+  children,
 }: any) => {
   return (
     <TableContainer component={Paper}>

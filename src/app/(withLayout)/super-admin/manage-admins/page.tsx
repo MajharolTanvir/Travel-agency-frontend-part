@@ -6,7 +6,7 @@ import { useGetAllAdminQuery } from "@/redux/api/UserApi";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
 import TableComponent from "@/components/UI/tableComponent";
-import { TableCell, TableRow } from "@mui/material";
+import { Input, TableCell, TableRow } from "@mui/material";
 import { Column, UserType } from "@/types";
 import { useDebounced } from "@/redux/hook";
 import ButtonComponent from "@/components/UI/buttonComponent";
@@ -82,7 +82,7 @@ const ManageAdmin = () => {
       />
       <DetailsTab title="Manage Admin">
         <div className="md:flex justify-between items-center gap-5 mb-5">
-          <input
+          <Input
             // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}

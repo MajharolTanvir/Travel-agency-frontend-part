@@ -1,19 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
-import { useGetAllProfileQuery } from "@/redux/api/UserApi";
+import {
+  useDeleteDivisionMutation,
+  useGetAllDivisionQuery,
+} from "@/redux/api/DivisionApi";
 import { useDebounced } from "@/redux/hook";
-import TableComponent from "@/components/UI/tableComponent";
-import { Column } from "@/types";
+import ButtonComponent from "@/components/UI/buttonComponent";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
-import ButtonComponent from "@/components/UI/buttonComponent";
+import { Input, TableCell, TableRow } from "@mui/material";
+import TableComponent from "@/components/UI/tableComponent";
+import DeleteIcon from "@mui/icons-material/Delete";
 import CachedIcon from "@mui/icons-material/Cached";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { Input, TableCell, TableRow } from "@mui/material";
-import Link from "next/link";
+import EditIcon from "@mui/icons-material/Edit";
 
-const ManageUser = () => {
+const Division = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -21,6 +25,7 @@ const ManageUser = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [deleteDivision] = useDeleteDivisionMutation();
 
   query["limit"] = limit;
   query["page"] = page;
@@ -36,25 +41,26 @@ const ManageUser = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-    const { data, isLoading } = useGetAllProfileQuery({ ...query });
-    
-    if (isLoading) {
-       return <p>Loading......</p>
-   }
+  const { data, isLoading } = useGetAllDivisionQuery({ ...query });
+
+  if (isLoading) {
+    return <p>Loading......</p>;
+  }
 
   //@ts-ignore
-  const users = data?.users;
+  const divisions = data?.division;
   //@ts-ignore
   const meta = data?.meta;
 
-  const columns: readonly Column[] = [
-    { id: "firstName", label: "First Name" },
-    { id: "middleName", label: "Middle Name" },
-    { id: "lastName", label: "Last Name" },
-    { id: "email", label: "Email" },
-    { id: "role", label: "Role" },
+  const columns: any = [
+    { id: "title", label: "Division name" },
+    { id: "createdAt", label: "Created At" },
     { id: "action", label: "Action" },
   ];
+
+  const handleDelete = (id: string) => {
+    deleteDivision(id);
+  };
 
   const handleChangePage = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -81,22 +87,25 @@ const ManageUser = () => {
       <BreadcrumbsComponent
         items={[
           {
-            label: "Super_Admin",
-            link: "/super_admin",
+            label: "Super-Admin",
+            link: "/super-admin",
           },
         ]}
       />
-      <DetailsTab title="Manage user">
+      <DetailsTab title="Manage Division">
         <div className="md:flex justify-between items-center gap-5 mb-5">
           <Input
-            // size="large"
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{
               width: "20%",
             }}
           />
+
           <div className="flex justify-between items-center gap-2">
+            <Link href="/super-admin/division/create-division">
+              <ButtonComponent>Create division</ButtonComponent>
+            </Link>
             {(!!sortBy || !!sortOrder || !!searchTerm) && (
               <ButtonComponent onclick={resetFilters}>
                 <CachedIcon />
@@ -113,27 +122,31 @@ const ManageUser = () => {
             page={page}
             meta={meta}
           >
-            {users?.map((user: any) => (
+            {divisions?.map((division: any) => (
               <TableRow
-                key={user?.id}
+                key={division?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{user?.firstName}</TableCell>
-                <TableCell align="center">
-                  {(user?.middleName && user?.middleName) || ""}
-                </TableCell>
-                <TableCell align="center"> {user?.lastName}</TableCell>
-                <TableCell align="center">{user?.email}</TableCell>
-                <TableCell align="center">{user?.role}</TableCell>
+                <TableCell align="center">{division?.title}</TableCell>
+                <TableCell align="center">{division?.createdAt}</TableCell>
 
                 <TableCell align="center">
                   <span className="flex gap-4 justify-center items-center">
-                    <Link
-                      href={`/super-admin/manage-users/details/${user?.id}`}
+                    {/* <Link
+                      href={`/super-admin/division/details/${division?.id}`}
                       className="text-blue-500 text-xl"
                     >
                       <RemoveRedEyeIcon />
+                    </Link> */}
+                    <Link
+                      href={`/super-admin/division/edit/${division?.id}`}
+                      className="text-blue-500 text-xl"
+                    >
+                      <EditIcon />
                     </Link>
+                    <ButtonComponent onclick={() => handleDelete(division?.id)}>
+                      <DeleteIcon />
+                    </ButtonComponent>
                   </span>
                 </TableCell>
               </TableRow>
@@ -145,4 +158,4 @@ const ManageUser = () => {
   );
 };
 
-export default ManageUser;
+export default Division;
