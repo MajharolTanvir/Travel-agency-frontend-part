@@ -64,8 +64,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <div>
-      <Navbar />
+    <section>
       <Container maxWidth="xl">
         <BreadcrumbsComponent
           items={[
@@ -196,7 +195,7 @@ const UpdateProfile = () => {
           </section>
         </DetailsTab>
       </Container>
-    </div>
+    </section>
   );
 };
 

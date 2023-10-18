@@ -26,9 +26,13 @@ export type UserInfoProps = {
   role?: string;
 };
 
-export interface IUser {
-  data?: any;
-  meta?: any;
+export interface Column {
+  id?: string;
+  label?: string;
+  minWidth?: number;
+  align?: "center" | "left" | "right" | "inherit" | "justify" | undefined;
+  format?: (value: any) => any;
+  render?: (value: any) => any;
 }
 
 export interface IDivision {
@@ -50,4 +54,14 @@ export interface IPlace {
 export interface IHotel {
   data?: any;
   meta?: any;
+}
+
+
+export interface UserType {
+  firstName: string;
+  middleName?: string
+  lastName: string;
+  email: string;
+  role: string;
+  createdAt: string;
 }
