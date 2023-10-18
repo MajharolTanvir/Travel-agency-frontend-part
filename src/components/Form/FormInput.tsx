@@ -63,6 +63,7 @@ const FormInput = ({
           type === "password" ? (
             <Input
               {...field}
+              className="text-white"
               id="standard-adornment-password"
               value={value ? value : field.value}
               defaultValue={defaultValue}
@@ -81,7 +82,7 @@ const FormInput = ({
             />
           ) : (
             <TextField
-              className="w-full mb-5 active:border-white p-2"
+              className="w-full mb-5 text-white p-2"
               {...field}
               variant="standard"
               placeholder={placeholder}

@@ -62,7 +62,10 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar className="bg-[#0C690E]" position="static">
+    <AppBar
+      className="bg-gradient-to-br from-[#485563] to-[#29323c]"
+      position="static"
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
