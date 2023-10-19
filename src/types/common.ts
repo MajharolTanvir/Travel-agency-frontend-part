@@ -23,7 +23,7 @@ type IGenericErrorMessage = {
 export type UserInfoProps = {
   userId?: string;
   userEmail?: string;
-  role?: string;
+  role?: string | undefined;
 };
 
 export interface Column {
@@ -89,4 +89,12 @@ export interface UserType {
   email: string;
   role: string;
   createdAt: string;
+}
+
+export interface IFeedback {
+  id?: string;
+  subject: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
 }

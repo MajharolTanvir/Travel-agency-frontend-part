@@ -117,7 +117,6 @@ const UpdateHotel = ({ params }: IDProps) => {
                   name="districtId"
                   label="District"
                   options={districtOptions}
-                  size="large"
                   placeholder={data?.district?.title}
                 />
               </div>
@@ -127,7 +126,6 @@ const UpdateHotel = ({ params }: IDProps) => {
                   name="hotelType"
                   label="Hotel Type"
                   options={hotelOptions}
-                  size="large"
                   placeholder="Select place"
                 />
               </div>

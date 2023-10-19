@@ -1,12 +1,11 @@
 "use client";
 
 import { useGetProfileQuery } from "@/redux/api/UserApi";
-import { isLoggedIn } from "@/services/auth.services";
 import { Avatar, Divider, Popover, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
 import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
+import ViewFeedback from "@/components/UI/ViewFeedback";
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -26,9 +25,8 @@ const Profile = () => {
     <p>Loading....</p>;
   }
 
-
   return (
-    <section className={`flex justify-center items-center min-h-screen`}>
+    <section className={`lg:flex justify-evenly items-center min-h-screen`}>
       {data && (
         <div className="p-10 text-black backdrop-blur-3xl rounded-2xl w-[300px] md:w-[400px] lg:w-[600px] shadow-md">
           <div className="flex justify-start items-start">
@@ -173,6 +171,7 @@ const Profile = () => {
           </div>
         </div>
       )}
+      <ViewFeedback />
     </section>
   );
 };

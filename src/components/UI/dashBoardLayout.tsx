@@ -1,21 +1,17 @@
 "use client";
-import * as React from "react";
+import React from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider, { dividerClasses } from "@mui/material/Divider";
+import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import Link from "next/link";
-import { DashBoardItems } from "./dashBoardItems";
-import { getUserInfo, isLoggedIn } from "@/services/auth.services";
-import MyLink from "./MyLink";
+import { isLoggedIn } from "@/services/auth.services";
 import { useRouter } from "next/navigation";
+import MenuItems from "./MenuItems";
 
 const drawerWidth = 240;
 
@@ -45,30 +41,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-}));
-
-interface AppBarProps extends MuiAppBarProps {
-  open?: boolean;
-}
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})<AppBarProps>(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(["width", "margin"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
 }));
 
 const Drawer = styled(MuiDrawer, {
@@ -98,9 +71,11 @@ export default function DashboardLayout({
   const isUserLogIn = isLoggedIn();
   const router = useRouter();
 
-  if (!isUserLogIn) {
-    router.push("/auth/login");
-  }
+  React.useEffect(() => {
+    if (!isUserLogIn) {
+      router.push("/auth/login");
+    }
+  }, [isUserLogIn, router]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -110,14 +85,9 @@ export default function DashboardLayout({
     setOpen(false);
   };
 
-  // @ts-ignore
-  const { role } = getUserInfo();
-  const sideBarItem = DashBoardItems(role);
-
   return (
-    <Box sx={{ display: "flex" }}>
+    <div className="flex">
       <CssBaseline />
-      <AppBar position="fixed" open={open}></AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           {open ? (
@@ -135,57 +105,9 @@ export default function DashboardLayout({
           )}
         </DrawerHeader>
         <Divider />
-        <div>
-          {sideBarItem.map((sideBarItem: any, index) => (
-            <div key={index}>
-              <div className="px-5 flex gap-5 cursor-pointer">
-                <div className="mt-5 sideBarItem-gray-500">
-                  {sideBarItem?.icon}
-                </div>
-                <MyLink sideBarItem={sideBarItem} />
-              </div>
-              {sideBarItem?.toggle == true && (
-                <div>
-                  {sideBarItem.children.map(
-                    (
-                      item: {
-                        icon: string;
-                        link: string;
-                        level:
-                          | string
-                          | number
-                          | boolean
-                          | React.ReactElement<
-                              any,
-                              string | React.JSXElementConstructor<any>
-                            >
-                          | Iterable<React.ReactNode>
-                          | React.ReactPortal
-                          | React.PromiseLikeOfReactNode
-                          | null
-                          | undefined;
-                      },
-                      i: React.Key | null | undefined
-                    ) => (
-                      <div className="flex gap-5 px-10" key={i}>
-                        {" "}
-                        <div className="mt-3  sideBarItem-gray-500">
-                          {item?.icon}
-                        </div>
-                        <div className="mt-3">
-                          <Link href={item?.link as string}>{item?.level}</Link>
-                        </div>
-                      </div>
-                    )
-                  )}
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        <MenuItems />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        {/* <DrawerHeader /> */}
         <div
           className={` ${
             open == false ? "mx-auto " : "lg:pl-20"
@@ -194,6 +116,6 @@ export default function DashboardLayout({
           {children}
         </div>
       </Box>
-    </Box>
+    </div>
   );
 }

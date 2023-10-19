@@ -1,8 +1,7 @@
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+"use client";
+
 import { USER_ROLE } from "@/constant/role";
-import ButtonComponent from "./buttonComponent";
-import { useRouter } from "next/navigation";
-import { removeUserInfo } from "@/services/auth.services";
+import { getUserInfo, removeUserInfo } from "@/services/auth.services";
 import { authKey } from "@/constant/storageKey";
 import Swal from "sweetalert2";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -14,76 +13,72 @@ import PlaceIcon from "@mui/icons-material/Place";
 import EmojiTransportationIcon from "@mui/icons-material/EmojiTransportation";
 import HouseIcon from "@mui/icons-material/House";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import { UserInfoProps } from "@/types";
+import ForumIcon from "@mui/icons-material/Forum";
 
-export const DashBoardItems = (role: string) => {
-  const router = useRouter();
-
-  const logout = () => {
-    removeUserInfo(authKey);
-    router.push("/auth/signin");
-    Swal.fire("Signout!", "Sign out successfully!", "success");
-  };
+export const DashBoardItems = (logout: any) => {
+  const { role } = getUserInfo() as UserInfoProps;
 
   const defaultSideBar = [
     {
+      icon: <PersonOutlineIcon />,
       link: "/profile",
       level: "Profile",
-      icon: <PersonOutlineIcon />,
     },
     {
+      icon: <LogoutIcon />,
       link: "",
       level: <h2 onClick={logout}>Logout</h2>,
-      icon: <LogoutIcon />,
     },
   ];
   const userSideBar = [
-    // {
-    //   link: "/dashboard/User/appointment",
-    //   level: "Appointment",
-    //   icon: <InboxIcon></InboxIcon>,
-    // },
+    {
+      icon: <ForumIcon />,
+      link: "/user/feedback",
+      level: "Feedback",
+    },
     ...defaultSideBar,
   ];
 
   const adminSideBar = [
     {
+      icon: <PlaceIcon />,
       link: "/admin/place",
       level: "Manage Place",
-      icon: <PlaceIcon />,
     },
     {
+      icon: <EmojiTransportationIcon />,
       link: "/admin/hotel",
       level: "Manage Hotel",
-      icon: <EmojiTransportationIcon />,
     },
     {
+      icon: <HouseIcon />,
       link: "/admin/room",
       level: "Manage Room",
-      icon: <HouseIcon />,
     },
     ...defaultSideBar,
   ];
 
   const superAdminSideBar = [
     {
+      icon: <SupervisorAccountIcon />,
       link: "/super-admin/manage-admins",
       level: "Manage Admins",
-      icon: <SupervisorAccountIcon />,
     },
     {
+      icon: <PersonIcon />,
       link: "/super-admin/manage-users",
       level: "Manage Users",
-      icon: <PersonIcon />,
     },
     {
+      icon: <PublicIcon />,
       link: "/super-admin/division",
       level: "Manage Division",
-      icon: <PublicIcon />,
     },
     {
+      icon: <AddLocationAltIcon />,
       link: "/super-admin/district",
       level: "Manage District",
-      icon: <AddLocationAltIcon />,
     },
     ...adminSideBar,
   ];

@@ -95,7 +95,6 @@ const UpdateDivision = ({ params }: IDProps) => {
                   name="divisionId"
                   label="Division"
                   options={divisionOptions}
-                  size="large"
                   placeholder={data?.division?.title}
                 />
               </div>

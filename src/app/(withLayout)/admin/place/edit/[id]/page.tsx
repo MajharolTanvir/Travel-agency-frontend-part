@@ -92,7 +92,6 @@ const UpdatePlace = ({ params }: IDProps) => {
                   name="districtId"
                   label="District"
                   options={districtOptions}
-                  size="large"
                   placeholder={data?.district?.title}
                 />
               </div>

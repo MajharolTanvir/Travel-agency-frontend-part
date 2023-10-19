@@ -79,7 +79,6 @@ const CreatePlace = () => {
                   name="districtId"
                   label="District"
                   options={districtOptions}
-                  size="large"
                   placeholder="Select district"
                 />
               </div>

@@ -98,7 +98,6 @@ const CreateHotel = () => {
                   name="districtId"
                   label="District"
                   options={districtOptions}
-                  size="large"
                   placeholder="Select district"
                 />
               </div>
@@ -108,7 +107,6 @@ const CreateHotel = () => {
                   name="hotelType"
                   label="Hotel Type"
                   options={hotelOptions}
-                  size="large"
                   placeholder="Select place"
                 />
               </div>
