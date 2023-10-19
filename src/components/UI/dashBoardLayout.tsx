@@ -13,14 +13,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Link from "next/link";
 import { DashBoardItems } from "./dashBoardItems";
-import { getUserInfo } from "@/services/auth.services";
+import { getUserInfo, isLoggedIn } from "@/services/auth.services";
 import MyLink from "./MyLink";
-import {
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const drawerWidth = 240;
 
@@ -100,6 +95,12 @@ export default function DashboardLayout({
 }) {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const isUserLogIn = isLoggedIn();
+  const router = useRouter();
+
+  if (!isUserLogIn) {
+    router.push("/auth/login");
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);

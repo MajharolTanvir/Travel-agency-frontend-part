@@ -18,7 +18,11 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import Link from "next/link";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-const pages = ["Home", "District", "Places"];
+const pages = [
+  { label: "Home", link: "/" },
+  { label: "District", link: "/district" },
+  { label: "Room", link: "/room" },
+];
 const settings = [
   {
     label: "Profile",
@@ -116,8 +120,10 @@ const Navbar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
+                  <Link href={page.link}>
+                    <Typography textAlign="center">{page.label}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -142,13 +148,14 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
+              <Link key={page.label} href={page.link}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  {page.label}
+                </Button>
+              </Link>
             ))}
           </Box>
 

@@ -72,6 +72,16 @@ export interface IHotel {
   meta?: any;
 }
 
+export interface IBookedHotel {
+  userId?: string;
+  roomId?: string;
+  checkInDate?: string;
+  checkOutDate?: string;
+  roomConfirmation?: string;
+  roomNo?: string;
+  roomFloor?: string;
+}
+
 export interface UserType {
   firstName: string;
   middleName?: string;

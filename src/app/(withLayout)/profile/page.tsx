@@ -1,7 +1,5 @@
 "use client";
 
-import Navbar from "@/components/Navbar/page";
-import ButtonComponent from "@/components/UI/buttonComponent";
 import { useGetProfileQuery } from "@/redux/api/UserApi";
 import { isLoggedIn } from "@/services/auth.services";
 import { Avatar, Divider, Popover, Typography } from "@mui/material";
@@ -13,8 +11,6 @@ import Link from "next/link";
 const Profile = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const { data, isLoading } = useGetProfileQuery({});
-  const isUserLogIn = isLoggedIn();
-  const router = useRouter();
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -29,9 +25,7 @@ const Profile = () => {
   if (isLoading) {
     <p>Loading....</p>;
   }
-  if (!isUserLogIn) {
-    router.push("/auth/login");
-  }
+
 
   return (
     <section className={`flex justify-center items-center min-h-screen`}>

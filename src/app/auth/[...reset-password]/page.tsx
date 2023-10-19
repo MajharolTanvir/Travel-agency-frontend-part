@@ -45,11 +45,11 @@ const ResetPassword = ({
       <div
         className={`min-h-screen flex justify-center items-center  ${styles.backgroundImage}`}
       >
-        <div className="w-full md:w-[600px] p-10 backdrop-blur-3xl text-white rounded-2xl">
+        <div className="w-full md:w-[600px] p-10 bg-slate-300 text-[#29323c] rounded-2xl">
           <h2 className="text-center font-bold text-2xl mb-2">
             Reset Password
           </h2>
-          <Divider style={{ borderColor: "rgb(37 99 235)" }} />
+          <Divider className="bg-[#29323c]" />
           <Form submitHandler={onSubmit}>
             <FormInput
               type="password"
