@@ -34,7 +34,6 @@ const CreateHotel = () => {
   });
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     data.hotelImage = imageUrl && imageUrl;
 
     try {

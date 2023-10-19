@@ -36,6 +36,8 @@ export interface Column {
 }
 
 export interface IDivision {
+  description: any;
+  thumbnail: string | undefined;
   id: any;
   title: any;
   createdAt: any;

@@ -15,6 +15,7 @@ import HouseIcon from "@mui/icons-material/House";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { UserInfoProps } from "@/types";
 import ForumIcon from "@mui/icons-material/Forum";
+import RssFeedIcon from "@mui/icons-material/RssFeed";
 
 export const DashBoardItems = (logout: any) => {
   const { role } = getUserInfo() as UserInfoProps;
@@ -55,6 +56,16 @@ export const DashBoardItems = (logout: any) => {
       icon: <HouseIcon />,
       link: "/admin/room",
       level: "Manage Room",
+    },
+    {
+      icon: <RssFeedIcon />,
+      link: "/admin/blog",
+      level: "Blog",
+    },
+    {
+      icon: <ForumIcon />,
+      link: "/admin/feedback",
+      level: "Feedback",
     },
     ...defaultSideBar,
   ];

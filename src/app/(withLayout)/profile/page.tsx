@@ -6,10 +6,13 @@ import React from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import Link from "next/link";
 import ViewFeedback from "@/components/UI/ViewFeedback";
+import { getUserInfo } from "@/services/auth.services";
+import { UserInfoProps } from "@/types";
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const { data, isLoading } = useGetProfileQuery({});
+  const { role } = getUserInfo() as UserInfoProps;
 
   const handlePopoverOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -171,7 +174,7 @@ const Profile = () => {
           </div>
         </div>
       )}
-      <ViewFeedback />
+      {role === "user" && <ViewFeedback />}
     </section>
   );
 };

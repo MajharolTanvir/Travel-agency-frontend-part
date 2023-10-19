@@ -17,7 +17,7 @@ const ButtonComponent = ({
   onChange,
 }: buttonProps) => {
   return (
-    <div>
+    <div className="my-2">
       <Button
         type="submit"
         onClick={onclick}

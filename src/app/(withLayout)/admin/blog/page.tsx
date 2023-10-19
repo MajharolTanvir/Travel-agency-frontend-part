@@ -9,7 +9,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ButtonComponent from "../UI/buttonComponent";
+import ButtonComponent from "@/components/UI/buttonComponent";
+import Link from "next/link";
 
 const Blog = () => {
   const { data, isLoading } = useGetAllBlogQuery({});
@@ -17,11 +18,12 @@ const Blog = () => {
     return <p>Loading.....</p>;
   }
 
-  const blogs = data?.blog.slice(0, 6);
+  const blogs = data?.blog;
+  console.log(blogs);
 
   return (
     <div>
-
+      <DetailsTab title="Manage Blog">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {blogs!.map((blog) => (
             <Card key={blog.id} sx={{ maxWidth: 345 }}>
@@ -40,10 +42,14 @@ const Blog = () => {
               </CardContent>
               <CardActions>
                 <ButtonComponent>View details</ButtonComponent>
+                <Link href={`/admin/blog/edit/${blog?.id}`}>
+                  <ButtonComponent>Edit blog</ButtonComponent>
+                </Link>
               </CardActions>
             </Card>
           ))}
         </div>
+      </DetailsTab>
     </div>
   );
 };
