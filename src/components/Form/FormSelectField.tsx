@@ -47,24 +47,18 @@ interface IOptions {
 }
 interface IInput {
   name: string;
-  type?: string;
-  size?: string;
   options?: IOptions[];
-  id?: string;
+  defaultValue?: string;
   placeholder?: string;
-  validation?: object;
   label?: string;
 }
 
 export default function FormSelectFields({
   name,
-  type,
-  size,
-  id,
   placeholder,
-  validation,
   options,
   label,
+  defaultValue,
 }: IInput) {
   const [age, setAge] = React.useState("");
   const handleChange = (event: { target: { value: string } }) => {
@@ -102,7 +96,7 @@ export default function FormSelectFields({
               input={<BootstrapInput />}
             >
               {options?.map((op, i) => (
-                <MenuItem key={i} value={op.value}>
+                <MenuItem key={i} value={op.value} defaultValue={defaultValue}>
                   {op.label}
                 </MenuItem>
               ))}

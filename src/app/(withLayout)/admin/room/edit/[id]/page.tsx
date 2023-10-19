@@ -14,6 +14,7 @@ import {
   useGetSingleRoomQuery,
   useUpdatedRoomMutation,
 } from "@/redux/api/RoomApi";
+import { convertToAmPm } from "@/utils/TimeConverter";
 import { Avatar } from "@mui/material";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
@@ -38,7 +39,7 @@ const UpdateRoom = ({ params }: IDProps) => {
   if (isLoading) {
     <p>Loading..........</p>;
   }
-
+  const roomImage = data?.roomImages;
   const hotels = hotelData?.hotel;
   const hotelsOptions = hotels?.map((hotel: any) => {
     return {
@@ -48,11 +49,12 @@ const UpdateRoom = ({ params }: IDProps) => {
   });
 
   const onSubmit = async (values: any) => {
-
     values.roomPrice = parseInt(values?.roomPrice);
-    values.roomImages = uploadedImages && uploadedImages;
-
-    console.log(values)
+    values.roomImages =
+      uploadedImages.length === 0 ? roomImage : uploadedImages;
+    values.checkInTime = convertToAmPm(values.checkInTime);
+    values.checkOutTime = convertToAmPm(values.checkOutTime);
+    console.log(values);
     const data = {
       id: id,
       values: values,
@@ -63,7 +65,7 @@ const UpdateRoom = ({ params }: IDProps) => {
         Swal.fire("Room Updated!", "Room updated successfully!", "success");
       }
     } catch (error: any) {
-     Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Signup failed!", error.message, "error");
     }
   };
 
@@ -71,6 +73,9 @@ const UpdateRoom = ({ params }: IDProps) => {
     roomType: data?.roomType || "",
     description: data?.description || "",
     roomPrice: data?.roomPrice || "",
+    hotelId: data?.hotelId,
+    checkInTime: data?.checkInTime,
+    checkOutTime: data?.checkOutTime,
   };
 
   return (
@@ -116,8 +121,8 @@ const UpdateRoom = ({ params }: IDProps) => {
                   name="hotelId"
                   label="Hotel Name"
                   options={hotelsOptions}
-                  size="large"
                   placeholder={data?.hotel?.title}
+                  defaultValue={data?.hotel?.id}
                 />
               </div>
 
@@ -148,12 +153,32 @@ const UpdateRoom = ({ params }: IDProps) => {
                 ></MultipleImageUpload>
               </div>
 
+              {roomImage && (
+                <div className="flex flex-wrap gap-2">
+                  {roomImage?.map(
+                    (image: { url: React.Key | null | undefined }) => {
+                      if (typeof image.url === "string") {
+                        return (
+                          <Avatar
+                            key={image.url}
+                            alt="Image"
+                            src={image.url}
+                            sx={{ width: 80, height: 80 }}
+                          />
+                        );
+                      }
+                      return null;
+                    }
+                  )}
+                </div>
+              )}
+
               <div className="flex flex-wrap gap-2">
-                {images.map((image, index) => (
+                {uploadedImages.map((image, index) => (
                   <Avatar
                     key={index}
                     alt="Image"
-                    src={image}
+                    src={image.url}
                     sx={{ width: 80, height: 80 }}
                   />
                 ))}

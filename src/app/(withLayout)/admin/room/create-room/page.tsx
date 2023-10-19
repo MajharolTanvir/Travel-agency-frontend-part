@@ -11,6 +11,7 @@ import ButtonComponent from "@/components/UI/buttonComponent";
 import DetailsTab from "@/components/UI/detailsTab";
 import { useGetAllHotelQuery } from "@/redux/api/HotelApi";
 import { useCreateRoomMutation } from "@/redux/api/RoomApi";
+import { convertToAmPm } from "@/utils/TimeConverter";
 import { Avatar } from "@mui/material";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
@@ -42,6 +43,8 @@ const CreateRoom = () => {
   const onSubmit = async (data: any) => {
     data.roomPrice = parseInt(data?.roomPrice);
     data.roomImages = uploadedImages && uploadedImages;
+    data.checkInTime = convertToAmPm(data.checkInTime);
+    data.checkOutTime = convertToAmPm(data.checkOutTime);
 
     try {
       const res = await createRoom(data);
@@ -95,7 +98,6 @@ const CreateRoom = () => {
                   name="hotelId"
                   label="Hotel Name"
                   options={hotelOptions}
-                  size="large"
                   placeholder="Select hotel"
                 />
               </div>
