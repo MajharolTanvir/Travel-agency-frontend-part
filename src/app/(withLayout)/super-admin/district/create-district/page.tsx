@@ -32,7 +32,6 @@ const CreateDivision = () => {
 
   const onSubmit = async (data: any) => {
     data.districtImage = imageUrl && imageUrl;
-    console.log(data);
     try {
       const res = await createDistrict(data).unwrap();
       if (res.id) {

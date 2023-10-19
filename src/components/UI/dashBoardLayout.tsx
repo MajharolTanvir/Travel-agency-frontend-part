@@ -99,7 +99,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -188,7 +188,7 @@ export default function DashboardLayout({
         <div
           className={` ${
             open == false ? "mx-auto " : "lg:pl-20"
-          } lg:max-w-7xl  `}
+          } lg:max-w-full  `}
         >
           {children}
         </div>

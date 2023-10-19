@@ -23,7 +23,7 @@ const TableComponent = ({
     <TableContainer component={Paper}>
       <div className="w-56 lg:w-full ">
         <Table
-          sx={{ minWidth: 650, overflow: "hidden" }}
+          className="w-full overflow-hidden"
           aria-label="simple table"
         >
           <TableHead sx={{ backgroundColor: "#30029010 " }}>

@@ -29,7 +29,6 @@ const Profile = () => {
   if (isLoading) {
     <p>Loading....</p>;
   }
-  console.log(data);
   if (!isUserLogIn) {
     router.push("/auth/login");
   }

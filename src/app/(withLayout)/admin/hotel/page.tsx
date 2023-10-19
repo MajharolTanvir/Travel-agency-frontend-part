@@ -1,24 +1,23 @@
 "use client";
 
+import { useDebounced } from "@/redux/hook";
 import Link from "next/link";
 import React, { useState } from "react";
+import {
+  useDeleteHotelMutation,
+  useGetAllHotelQuery,
+} from "@/redux/api/HotelApi";
+import BreadcrumbsComponent from "@/components/UI/breadCrumb";
+import DetailsTab from "@/components/UI/detailsTab";
+import { Avatar, Input, TableCell, TableRow } from "@mui/material";
+import ButtonComponent from "@/components/UI/buttonComponent";
+import TableComponent from "@/components/UI/tableComponent";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CachedIcon from "@mui/icons-material/Cached";
-import {
-  useDeletePlaceMutation,
-  useGetAllPlaceQuery,
-} from "@/redux/api/PlaceApi";
-import { useDebounced } from "@/redux/hook";
-import ButtonComponent from "@/components/UI/buttonComponent";
-import { DeleteOutlined, EditOutlined } from "@mui/icons-material";
-import BreadcrumbsComponent from "@/components/UI/breadCrumb";
-import DetailsTab from "@/components/UI/detailsTab";
-import { Avatar, Input, TableCell, TableRow } from "@mui/material";
-import TableComponent from "@/components/UI/tableComponent";
 
-const Place = () => {
+const Hotel = () => {
   const query: Record<string, any> = {};
 
   const [page, setPage] = useState<number>(1);
@@ -26,7 +25,7 @@ const Place = () => {
   const [sortBy, setSortBy] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [deletePlace] = useDeletePlaceMutation();
+  const [deleteHotel] = useDeleteHotelMutation();
 
   query["limit"] = limit;
   query["page"] = page;
@@ -42,19 +41,25 @@ const Place = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllPlaceQuery({ ...query });
+  const { data, isLoading } = useGetAllHotelQuery({ ...query });
+  if (isLoading) {
+    return <p>Loading..........</p>;
+  }
+
   //@ts-ignore
-  const places = data?.place;
+  const hotels = data?.hotel;
   //@ts-ignore
   const meta = data?.meta;
 
   const handleDelete = (id: string) => {
-    deletePlace(id);
+    deleteHotel(id);
   };
 
   const columns: any = [
     { id: "title", label: "Division name" },
-    { id: "districtImage", label: "District Image" },
+    { id: "hotelImage", label: "Hotel Image" },
+    { id: "contactNo", label: "Contact No" },
+    { id: "location", label: "Location" },
     { id: "createdAt", label: "Created At" },
     { id: "action", label: "Action" },
   ];
@@ -89,7 +94,7 @@ const Place = () => {
           },
         ]}
       />
-      <DetailsTab title="Manage Place">
+      <DetailsTab title="Manage Hotel">
         <div className="md:flex justify-between items-center gap-5 mb-5">
           <Input
             placeholder="Search"
@@ -99,8 +104,8 @@ const Place = () => {
             }}
           />
           <div className="flex justify-between items-center gap-2">
-            <Link href="/admin/place/create-place">
-              <ButtonComponent>Create Place</ButtonComponent>
+            <Link href="/admin/hotel/create-hotel">
+              <ButtonComponent>Create Hotel</ButtonComponent>
             </Link>
             {(!!sortBy || !!sortOrder || !!searchTerm) && (
               <ButtonComponent onclick={resetFilters}>
@@ -118,40 +123,42 @@ const Place = () => {
             page={page}
             meta={meta}
           >
-            {places?.map((place: any) => (
+            {hotels?.map((hotel: any) => (
               <TableRow
-                key={place?.id}
+                key={hotel?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell align="center">{place?.title}</TableCell>
+                <TableCell align="center">{hotel?.title}</TableCell>
                 <TableCell
                   align="center"
                   className="flex justify-center items-center"
                 >
                   <Avatar
                     alt="Remy Sharp"
-                    src={place?.placeImage}
+                    src={hotel?.hotelImage}
                     sx={{ width: 56, height: 56 }}
                   />
                 </TableCell>
+                <TableCell align="center">{hotel?.contactNo}</TableCell>
+                <TableCell align="center">{hotel?.location}</TableCell>
 
-                <TableCell align="center">{place?.createdAt}</TableCell>
+                <TableCell align="center">{hotel?.createdAt}</TableCell>
 
                 <TableCell align="center">
                   <span className="flex gap-4 justify-center items-center">
-                    {/* <Link
-                      href={`admin/place/details/${place?.id}`}
+                    <Link
+                      href={`/admin/hotel/details/${hotel?.id}`}
                       className="text-blue-500 text-xl"
                     >
                       <RemoveRedEyeIcon />
-                    </Link> */}
+                    </Link>
                     <Link
-                      href={`/admin/place/edit/${place?.id}`}
+                      href={`/admin/hotel/edit/${hotel?.id}`}
                       className="text-blue-500 text-xl"
                     >
                       <EditIcon />
                     </Link>
-                    <ButtonComponent onclick={() => handleDelete(place?.id)}>
+                    <ButtonComponent onclick={() => handleDelete(hotel?.id)}>
                       <DeleteIcon />
                     </ButtonComponent>
                   </span>
@@ -165,4 +172,4 @@ const Place = () => {
   );
 };
 
-export default Place;
+export default Hotel;
