@@ -48,11 +48,23 @@ export interface IDistrict {
   districtImage: string;
   createdAt: any;
   updatedAt: any;
+  hotel?: any;
+  place?: any;
+  division?: any;
 }
 
 export interface IPlace {
-  data?: any;
-  meta?: any;
+  id?: string;
+  title?: string;
+  placeImage?: string;
+  description?: string;
+  districtId?: string;
+  district?: any;
+  createdAt: any;
+  updatedAt: any;
+  hotel?: any;
+  place?: any;
+  division?: any;
 }
 
 export interface IHotel {
@@ -60,10 +72,9 @@ export interface IHotel {
   meta?: any;
 }
 
-
 export interface UserType {
   firstName: string;
-  middleName?: string
+  middleName?: string;
   lastName: string;
   email: string;
   role: string;

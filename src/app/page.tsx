@@ -28,29 +28,17 @@ export default function Home() {
         </div>
       </section>
 
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" className="mx-auto">
         <section className="mb-20">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#0C690E] text-center">
-            CHOSE YOUR DREAM CITY
-          </h1>
           <Districts />
         </section>
         <section className="mb-20">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#0C690E] text-center">
-            CHOSE YOUR DREAM CITY
-          </h1>
           <Places />
         </section>
         <section className="mb-20">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#0C690E] text-center">
-            What services we provide
-          </h1>
           <Services />
         </section>
         <section className="mb-20">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#0C690E] text-center">
-            Services we launch soon
-          </h1>
           <UpcomingServices />
         </section>
         <section className="mb-20">
