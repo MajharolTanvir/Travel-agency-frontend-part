@@ -9,10 +9,10 @@ import Image from "next/image";
 const Services = () => {
   return (
     <div>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#29323c] text-center">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-center">
         What services we provide
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center items-center gap-5 my-10">
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center items-center gap-5 my-10">
         <div>
           <Card sx={{ maxWidth: 345 }}>
             <Image
@@ -67,7 +67,7 @@ const Services = () => {
             </Typography>
           </Card>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -25,7 +25,7 @@ const ButtonComponent = ({
         variant="outlined"
         startIcon={startIcon}
         endIcon={endIcon}
-        className="my-3 w-full border-[#485563] text-[#485563] hover:bg-[#29323c] hover:text-white"
+        className="my-3 w-full border-violet-950 bg-violet-950 hover:bg-violet-700 hover:border-violet-700 font-bold text-sm md:text-md xl:text-lg text-white"
       >
         {children}
       </Button>
