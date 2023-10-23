@@ -18,15 +18,16 @@ export default function Home() {
       <section
         className={`flex justify-center items-center xl:min-h-[95vh] ${styles.backgroundImage} mb-20`}
       >
-        <div className="p-5 md:p-10 rounded-lg backdrop-blur-3xl backdrop-opacity-90 backdrop-contrast-100 text-white absolute">
+        <div className="p-5 md:p-10 lg:p-20 rounded-lg bg-black/70 opacity-90 backdrop-contrast-100 text-white absolute">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center">
-            VISIT THE CITY OF YOUR DREAMS
+            VISIT THE CITY OF{" "}
+            <span className="text-violet-400"> YOUR DREAMS</span>
           </h1>
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mt-5">
             Explore the world with us!
           </h1>
 
-          <div className="flex justify-center items-center my-5">
+          <div className="flex justify-center items-center mt-5">
             <ButtonComponent>Make your own plan</ButtonComponent>
           </div>
         </div>

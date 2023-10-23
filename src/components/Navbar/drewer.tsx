@@ -39,8 +39,7 @@ export default function TemporaryDrawer() {
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
-          className="pt-14 bg-gradient-to-b text-white from-violet-950 via-violet-700 to-violet-950 h-full"
-          
+      className="pt-14 bg-gradient-to-b text-white from-violet-950 via-violet-700 to-violet-950 h-full w-28"
     >
       <List>
         {pages.map((page) => (
@@ -55,7 +54,7 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div className="lg:hidden">
+    <div className="md:hidden ">
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <IconButton
