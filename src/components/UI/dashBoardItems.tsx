@@ -32,7 +32,7 @@ export const DashBoardItems = (logout: any) => {
       level: <h2 onClick={logout}>Logout</h2>,
     },
   ];
-  const userSideBar = [
+  const traveler_SideBar = [
     {
       icon: <ForumIcon />,
       link: "/user/feedback",
@@ -41,7 +41,25 @@ export const DashBoardItems = (logout: any) => {
     ...defaultSideBar,
   ];
 
-  const adminSideBar = [
+  const district_coordinator_sideBar = [
+    {
+      icon: <ForumIcon />,
+      link: "/user/feedback",
+      level: "Feedback",
+    },
+    ...defaultSideBar,
+  ];
+
+  const guide_sideBar = [
+    {
+      icon: <ForumIcon />,
+      link: "/user/feedback",
+      level: "Feedback",
+    },
+    ...defaultSideBar,
+  ];
+
+  const head_manager_sideBar = [
     {
       icon: <PlaceIcon />,
       link: "/admin/place",
@@ -91,11 +109,14 @@ export const DashBoardItems = (logout: any) => {
       link: "/super-admin/district",
       level: "Manage District",
     },
-    ...adminSideBar,
+    ...head_manager_sideBar,
   ];
 
-  if (role == USER_ROLE.USER) return userSideBar;
-  else if (role === USER_ROLE.ADMIN) return adminSideBar;
+  if (role == USER_ROLE.TRAVELER) return traveler_SideBar;
+  else if (role == USER_ROLE.GUIDE) return guide_sideBar;
+  else if (role === USER_ROLE.DISTRICT_COORDINATOR)
+    return district_coordinator_sideBar;
+  else if (role === USER_ROLE.HEAD_MANAGER) return head_manager_sideBar;
   else if (role === USER_ROLE.SUPER_ADMIN) return superAdminSideBar;
   else {
     return [

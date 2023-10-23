@@ -1,5 +1,7 @@
 export enum USER_ROLE {
-  USER = "user",
-  ADMIN = "admin",
+  TRAVELER = "traveler",
+  GUIDE = "guide",
+  DISTRICT_COORDINATOR = "district_coordinator",
+  HEAD_MANAGER = "head_manager",
   SUPER_ADMIN = "super_admin",
 }
