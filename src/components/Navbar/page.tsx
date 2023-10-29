@@ -18,12 +18,15 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import TemporaryDrawer from "./drewer";
 import logo from "../../assets/logo.png";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 const pages = [
   { label: "Home", link: "/" },
   { label: "District", link: "/district" },
+  { label: "Place", link: "/place" },
   { label: "Room", link: "/room" },
 ];
+
 const settings = [
   {
     label: "Profile",
@@ -44,6 +47,8 @@ const settings = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
+  
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -101,6 +106,9 @@ const Navbar = () => {
                   <Button
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "white", display: "block" }}
+                    className={`${
+                      pathname === page.link ? "font-bold" : "text-violet-200"
+                    } `}
                   >
                     {page.label}
                   </Button>
@@ -146,7 +154,14 @@ const Navbar = () => {
               >
                 {settings.map((setting) => (
                   <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
-                    <Link href={setting.link}>
+                    <Link
+                      className={`${
+                        pathname === setting.link
+                          ? "font-bold text-violet-700 w-full"
+                          : "w-full"
+                      } `}
+                      href={setting.link}
+                    >
                       <Typography textAlign="center">
                         {setting.label}
                       </Typography>

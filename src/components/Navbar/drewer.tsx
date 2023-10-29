@@ -6,6 +6,7 @@ import List from "@mui/material/List";
 import Link from "next/link";
 import { IconButton, MenuItem, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import { usePathname } from "next/navigation";
 
 type Anchor = "left";
 
@@ -33,6 +34,7 @@ export default function TemporaryDrawer() {
 
       setState({ ...state, [anchor]: open });
     };
+  const pathName = usePathname();
 
   const list = (anchor: Anchor) => (
     <Box
@@ -44,7 +46,12 @@ export default function TemporaryDrawer() {
       <List>
         {pages.map((page) => (
           <MenuItem key={page.label}>
-            <Link href={page.link}>
+            <Link
+              href={page.link}
+              className={`${
+                pathName === page.link ? "font-bold" : "text-violet-200"
+              } `}
+            >
               <Typography textAlign="center">{page.label}</Typography>
             </Link>
           </MenuItem>

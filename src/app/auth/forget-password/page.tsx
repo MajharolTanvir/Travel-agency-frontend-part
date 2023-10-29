@@ -34,11 +34,11 @@ const ForgetPassword = () => {
       <div
         className={`min-h-screen flex justify-center items-center ${styles.backgroundImage}`}
       >
-        <div className="w-full md:w-[600px] p-10 bg-slate-300 text-[#29323c] rounded-2xl">
-          <h2 className="text-center font-bold text-2xl mb-2">
+        <div className="p-5 md:p-10 backdrop-blur-3xl rounded-2xl text-black shadow-lg">
+          <h2 className="text-center font-bold text-2xl mb-2 text-violet-700">
             Forget Password
           </h2>
-          <Divider className="bg-[#29323c]" />
+          <Divider className="bg-violet-950" />
           <Form submitHandler={onSubmit}>
             <FormInput
               type="email"

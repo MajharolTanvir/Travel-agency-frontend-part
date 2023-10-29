@@ -75,17 +75,18 @@ const UpdateProfile = () => {
           ]}
         />
         <DetailsTab title="Update profile">
-          <section className={`flex justify-center items-center`}>
-            <div className="bg-gradient-to-br from-[#485563] to-[#29323c] rounded-2xl p-10 shadow-md">
+          <section>
+            <div className="rounded-2xl p-10 shadow-md">
               <Form submitHandler={onSubmit} defaultValues={defaultValues}>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-                  <div className="col-span-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                  <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 w-full">
                     <ImageUpload
                       imageUrl={imageUrl}
                       setImageUrl={setImageUrl}
                     ></ImageUpload>
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       size="large"
@@ -93,7 +94,8 @@ const UpdateProfile = () => {
                       label="First Name"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       size="large"
@@ -101,7 +103,8 @@ const UpdateProfile = () => {
                       label="Middle Name"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="lastName"
@@ -109,7 +112,8 @@ const UpdateProfile = () => {
                       label="Last Name"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="bio"
@@ -117,7 +121,8 @@ const UpdateProfile = () => {
                       label="Bio"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormSelectFields
                       name="gender"
                       label="Gender"
@@ -125,11 +130,12 @@ const UpdateProfile = () => {
                       placeholder="Male"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormDatePicker name="dateOfBirth" label="Date of Birth" />
                   </div>
 
-                  <div>
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="country"
@@ -137,7 +143,8 @@ const UpdateProfile = () => {
                       label="Country"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="division"
@@ -145,7 +152,8 @@ const UpdateProfile = () => {
                       label="Division"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="district"
@@ -153,7 +161,8 @@ const UpdateProfile = () => {
                       label="District"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="area"
@@ -161,7 +170,8 @@ const UpdateProfile = () => {
                       label="Area"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="nid"
@@ -169,7 +179,8 @@ const UpdateProfile = () => {
                       label="NID"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="passport"
@@ -177,7 +188,8 @@ const UpdateProfile = () => {
                       label="Passport No"
                     />
                   </div>
-                  <div>
+
+                  <div className="w-full">
                     <FormInput
                       type="text"
                       name="contactNo"

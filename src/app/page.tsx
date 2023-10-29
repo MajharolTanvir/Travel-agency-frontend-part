@@ -21,7 +21,10 @@ export default function Home() {
         <div className="p-5 md:p-10 lg:p-20 rounded-lg bg-black/70 opacity-90 backdrop-contrast-100 text-white absolute">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center">
             VISIT THE CITY OF{" "}
-            <span className="text-violet-400"> YOUR DREAMS</span>
+            <span className="text-violet-400 stroke-transparent">
+              {" "}
+              YOUR DREAMS
+            </span>
           </h1>
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-center mt-5">
             Explore the world with us!

@@ -43,10 +43,12 @@ const Signup = () => {
       <section
         className={`flex justify-center items-center min-h-screen ${styles.backgroundImage}`}
       >
-        <div className="p-10 bg-slate-300 text-[#29323c] rounded-2xl shadow-lg">
+        <div className="p-5 md:p-10 backdrop-blur-3xl rounded-2xl text-black shadow-lg">
           <div className="my-4">
-            <h1 className="text-center font-bold text-2xl mb-2">Signup here</h1>
-            <Divider className="bg-[#29323c]" />
+            <h1 className="text-center font-bold text-2xl mb-2 text-violet-700">
+              Signup here
+            </h1>
+            <Divider className="bg-violet-950" />
           </div>
           <Form submitHandler={onSubmit}>
             <div>
@@ -72,7 +74,7 @@ const Signup = () => {
             </div>
           </Form>
 
-          <Divider className="my-4" />
+          <Divider className="bg-violet-950 my-4" />
           <div>
             <Link href="/auth/login">Have you any account?</Link>
           </div>
