@@ -26,6 +26,8 @@ const UpdateDivision = ({ params }: IDProps) => {
   const { data, isLoading } = useGetSingleDistrictQuery(id);
   const { data: divisionData } = useGetAllDivisionQuery({});
 
+  console.log(data)
+
   if (isLoading) {
     <p>Loading..........</p>;
   }

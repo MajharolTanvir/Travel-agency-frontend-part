@@ -73,7 +73,7 @@ export default function DashboardLayout({
 
   React.useEffect(() => {
     if (!isUserLogIn) {
-      router.push("/auth/login");
+      router.push("/");
     }
   }, [isUserLogIn, router]);
 

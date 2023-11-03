@@ -132,7 +132,7 @@ const District = () => {
                   <Avatar
                     alt="Remy Sharp"
                     src={district?.districtImage}
-                    sx={{ width: 56, height: 56 }}
+                    sx={{ width: 80, height: 80 }}
                   />
                 </TableCell>
 
@@ -140,12 +140,6 @@ const District = () => {
 
                 <TableCell align="center">
                   <span className="flex gap-4 justify-center items-center">
-                    {/* <Link
-                      href={`/super-admin/district/details/${district?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <RemoveRedEyeIcon />
-                    </Link> */}
                     <Link
                       href={`/super-admin/district/edit/${district?.id}`}
                       className="text-blue-500 text-xl"

@@ -14,8 +14,9 @@ const CreateDivision = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      const res = await createDivision(data);
-      if (!!res) {
+      const res = await createDivision(data).unwrap();
+      console.log(res);
+      if (res.id) {
         Swal.fire(
           "Division Created!",
           "Division created successfully!",
@@ -23,7 +24,7 @@ const CreateDivision = () => {
         );
       }
     } catch (error: any) {
-      Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Division failed!", error.message, "error");
     }
   };
   return (
@@ -46,7 +47,12 @@ const CreateDivision = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 justify-start items-start">
           <Form submitHandler={onSubmit}>
             <div>
-              <FormInput name="title" label="Title" size="large" type="text" />
+              <FormInput
+                name="title"
+                label="Title"
+                size="large"
+                type="text"
+              />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">

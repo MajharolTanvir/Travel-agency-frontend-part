@@ -27,12 +27,12 @@ const Form = ({
   const methods = useForm<FromProps>(formConfig);
   const { handleSubmit, reset } = methods;
 
+  useEffect(() => reset(), [reset]);
+
   const onSubmit = (data: any) => {
     submitHandler(data);
     reset();
   };
-
-  useEffect(() => reset(defaultValues), [defaultValues, reset, methods]);
 
   return (
     <FormProvider {...methods}>

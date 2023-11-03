@@ -19,6 +19,7 @@ import TemporaryDrawer from "./drewer";
 import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { isLoggedIn } from "@/services/auth.services";
 
 const pages = [
   { label: "Home", link: "/" },
@@ -27,28 +28,33 @@ const pages = [
   { label: "Room", link: "/room" },
 ];
 
-const settings = [
-  {
-    label: "Profile",
-    link: "/profile",
-  },
-  {
-    label: "Dashboard",
-    link: "/dashboard",
-  },
-  {
-    label: "Login",
-    link: "/auth/login",
-  },
-  {
-    label: "Signup",
-    link: "/auth/signup",
-  },
-];
-
 const Navbar = () => {
   const pathname = usePathname();
-  
+  const loggedIn = isLoggedIn();
+
+  const settings = [
+    {
+      label: "Profile",
+      link: "/profile",
+    },
+    {
+      label: "Dashboard",
+      link: "/dashboard",
+    },
+    !loggedIn
+      ? {
+          label: "Login",
+          link: "/auth/login",
+        }
+      : null,
+    !loggedIn
+      ? {
+          label: "Signup",
+          link: "/auth/signup",
+        }
+      : null,
+  ].filter(Boolean);
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -153,17 +159,17 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 {settings.map((setting) => (
-                  <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
+                  <MenuItem key={setting?.label} onClick={handleCloseUserMenu}>
                     <Link
                       className={`${
-                        pathname === setting.link
+                        pathname === setting?.link
                           ? "font-bold text-violet-700 w-full"
                           : "w-full"
                       } `}
-                      href={setting.link}
+                      href={setting!?.link}
                     >
                       <Typography textAlign="center">
-                        {setting.label}
+                        {setting?.label}
                       </Typography>
                     </Link>
                   </MenuItem>
