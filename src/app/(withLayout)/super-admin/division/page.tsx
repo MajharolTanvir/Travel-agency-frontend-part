@@ -10,26 +10,27 @@ import { useDebounced } from "@/redux/hook";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
-import { Input, TableCell, TableRow } from "@mui/material";
-import TableComponent from "@/components/UI/tableComponent";
+import { Input, TableBody, TableCell, TableRow } from "@mui/material";
+import TableComponent from "@/components/UI/TableComponent";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CachedIcon from "@mui/icons-material/Cached";
 import EditIcon from "@mui/icons-material/Edit";
 
+export interface DivisionColumn {
+  id: "title" | "createdAt" | "action";
+  label: string;
+  minWidth?: number;
+  align?: "right";
+  format?: (value: number) => string;
+}
+
 const Division = () => {
   const query: Record<string, any> = {};
-
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [deleteDivision] = useDeleteDivisionMutation();
-
-  query["limit"] = limit;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const { data, isLoading } = useGetAllDivisionQuery({ ...query });
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -40,44 +41,26 @@ const Division = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllDivisionQuery({ ...query });
-
   if (isLoading) {
     return <p>Loading......</p>;
   }
 
   //@ts-ignore
   const divisions = data?.division;
-  //@ts-ignore
-  const meta = data?.meta;
 
-  const columns: any = [
+  const columns: DivisionColumn[] = [
     { id: "title", label: "Division name" },
     { id: "createdAt", label: "Created At" },
     { id: "action", label: "Action" },
   ];
 
+  const rows = divisions;
+
   const handleDelete = (id: string) => {
     deleteDivision(id);
   };
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setLimit(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
     setSearchTerm("");
   };
 
@@ -105,7 +88,7 @@ const Division = () => {
             <Link href="/super-admin/division/create-division">
               <ButtonComponent>Create division</ButtonComponent>
             </Link>
-            {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            {searchTerm && (
               <ButtonComponent onclick={resetFilters}>
                 <CachedIcon />
               </ButtonComponent>
@@ -115,35 +98,47 @@ const Division = () => {
         {data && (
           <TableComponent
             columns={columns}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            limit={limit}
+            rows={rows}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
             page={page}
-            meta={meta}
           >
-            {divisions?.map((division: any) => (
-              <TableRow
-                key={division?.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center">{division?.title}</TableCell>
-                <TableCell align="center">{division?.createdAt}</TableCell>
-
-                <TableCell align="center">
-                  <span className="flex gap-4 justify-center items-center">
-                    <Link
-                      href={`/super-admin/division/edit/${division?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <EditIcon />
-                    </Link>
-                    <ButtonComponent onclick={() => handleDelete(division?.id)}>
-                      <DeleteIcon />
-                    </ButtonComponent>
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
+            <TableBody>
+              {rows !== undefined &&
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.createdAt}
+                      >
+                        <TableCell>{row.title}</TableCell>
+                        <TableCell>{row?.createdAt}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Link
+                              href={`/super-admin/division/edit/${row?.id}`}
+                              className="text-blue-500 text-xl"
+                            >
+                              <ButtonComponent>
+                                <EditIcon />
+                              </ButtonComponent>
+                            </Link>
+                            <ButtonComponent
+                              onclick={() => handleDelete(row?.id)}
+                            >
+                              <DeleteIcon />
+                            </ButtonComponent>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+            </TableBody>
           </TableComponent>
         )}
       </DetailsTab>

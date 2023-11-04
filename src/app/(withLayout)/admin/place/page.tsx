@@ -14,10 +14,8 @@ import { Input, TableCell, TableRow } from "@mui/material";
 import TableComponent from "@/components/UI/TableComponent";
 import { Avatar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableBody from "@mui/material/TableBody";
-import { IPlace } from "@/types";
 
 export interface PlaceColumn {
   id: "title" | "placeImage" | "district" | "createdAt" | "action";

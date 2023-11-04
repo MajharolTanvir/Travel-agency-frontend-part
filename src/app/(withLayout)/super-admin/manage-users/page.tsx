@@ -3,29 +3,30 @@
 import React, { useState } from "react";
 import { useGetAllProfileQuery } from "@/redux/api/UserApi";
 import { useDebounced } from "@/redux/hook";
-import TableComponent from "@/components/UI/tableComponent";
+import TableComponent from "@/components/UI/TableComponent";
 import { Column } from "@/types";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import CachedIcon from "@mui/icons-material/Cached";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import { Input, TableCell, TableRow } from "@mui/material";
+import { Input, TableBody, TableCell, TableRow } from "@mui/material";
 import Link from "next/link";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
+export interface UserColumn {
+  id: "firstName" | "middleName" | "lastName" | "email" | "role" | "action";
+  label: string;
+  minWidth?: number;
+  align?: "right";
+  format?: (value: number) => string;
+}
 
 const ManageUser = () => {
   const query: Record<string, any> = {};
-
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  query["limit"] = limit;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const { data, isLoading } = useGetAllProfileQuery({ ...query });
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -36,18 +37,14 @@ const ManageUser = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-    const { data, isLoading } = useGetAllProfileQuery({ ...query });
-    
-    if (isLoading) {
-       return <p>Loading......</p>
-   }
+  if (isLoading) {
+    return <p>Loading......</p>;
+  }
 
   //@ts-ignore
   const users = data?.users;
-  //@ts-ignore
-  const meta = data?.meta;
 
-  const columns: readonly Column[] = [
+  const columns: readonly UserColumn[] = [
     { id: "firstName", label: "First Name" },
     { id: "middleName", label: "Middle Name" },
     { id: "lastName", label: "Last Name" },
@@ -56,23 +53,9 @@ const ManageUser = () => {
     { id: "action", label: "Action" },
   ];
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setLimit(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const rows = users;
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
     setSearchTerm("");
   };
 
@@ -97,7 +80,7 @@ const ManageUser = () => {
             }}
           />
           <div className="flex justify-between items-center gap-2">
-            {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            {searchTerm && (
               <ButtonComponent onclick={resetFilters}>
                 <CachedIcon />
               </ButtonComponent>
@@ -107,37 +90,45 @@ const ManageUser = () => {
         {data && (
           <TableComponent
             columns={columns}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            limit={limit}
+            rows={rows}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
             page={page}
-            meta={meta}
           >
-            {users?.map((user: any) => (
-              <TableRow
-                key={user?.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center">{user?.firstName}</TableCell>
-                <TableCell align="center">
-                  {(user?.middleName && user?.middleName) || ""}
-                </TableCell>
-                <TableCell align="center"> {user?.lastName}</TableCell>
-                <TableCell align="center">{user?.email}</TableCell>
-                <TableCell align="center">{user?.role}</TableCell>
-
-                <TableCell align="center">
-                  <span className="flex gap-4 justify-center items-center">
-                    <Link
-                      href={`/super-admin/manage-users/details/${user?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <RemoveRedEyeIcon />
-                    </Link>
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
+            <TableBody>
+              {rows !== undefined &&
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.createdAt}
+                      >
+                        <TableCell>{row.firstName}</TableCell>
+                        <TableCell>{row?.middleName}</TableCell>
+                        <TableCell>{row?.lastName}</TableCell>
+                        <TableCell>{row?.email}</TableCell>
+                        <TableCell>{row?.role}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Link
+                              href={`/super-admin/manage-users/details/${row?.id}`}
+                              className="text-blue-500 text-xl"
+                            >
+                              <ButtonComponent>
+                                <VisibilityIcon />
+                              </ButtonComponent>
+                            </Link>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+            </TableBody>
           </TableComponent>
         )}
       </DetailsTab>

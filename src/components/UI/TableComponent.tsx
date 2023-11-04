@@ -9,7 +9,7 @@ import { PlaceColumn } from "@/app/(withLayout)/admin/place/page";
 import Pagination from "./TablePagination";
 
 interface TableProps {
-  columns: PlaceColumn[];
+  columns: any;
   rows: any;
   children: React.ReactNode;
   page: number;
@@ -46,7 +46,7 @@ export default function StickyHeadTable({
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns.map((column: any) => (
                 <TableCell
                   key={column.id}
                   align={column.align}

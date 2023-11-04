@@ -9,28 +9,29 @@ import {
 } from "@/redux/api/DistrictApi";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
-import { Avatar, Input, TableCell, TableRow } from "@mui/material";
+import { Avatar, Input, TableBody, TableCell, TableRow } from "@mui/material";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import CachedIcon from "@mui/icons-material/Cached";
-import TableComponent from "@/components/UI/tableComponent";
+import TableComponent from "@/components/UI/TableComponent";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
+export interface HotelColumn {
+  id: "title" | "districtImage" | "createdAt" | "action";
+  label: string;
+  minWidth?: number;
+  align?: "right";
+  format?: (value: number) => string;
+}
+
 const District = () => {
   const query: Record<string, any> = {};
-
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [deleteDistrict] = useDeleteDistrictMutation();
-
-  query["limit"] = limit;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  const { data, isLoading } = useGetAllDistrictQuery({ ...query });
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -41,16 +42,12 @@ const District = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllDistrictQuery({ ...query });
-
   if (isLoading) {
     return <p>Loading......</p>;
   }
 
   //@ts-ignore
   const districts = data?.district;
-  //@ts-ignore
-  const meta = data?.meta;
 
   const columns: any = [
     { id: "title", label: "Division name" },
@@ -59,27 +56,13 @@ const District = () => {
     { id: "action", label: "Action" },
   ];
 
+  const rows = districts;
+
   const handleDelete = (id: string) => {
     deleteDistrict(id);
   };
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setLimit(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
     setSearchTerm("");
   };
 
@@ -106,7 +89,7 @@ const District = () => {
             <Link href="/super-admin/district/create-district">
               <ButtonComponent>Create district</ButtonComponent>
             </Link>
-            {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            {searchTerm && (
               <ButtonComponent onclick={resetFilters}>
                 <CachedIcon />
               </ButtonComponent>
@@ -116,43 +99,55 @@ const District = () => {
         {data && (
           <TableComponent
             columns={columns}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            limit={limit}
+            rows={rows}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
             page={page}
-            meta={meta}
           >
-            {districts?.map((district: any) => (
-              <TableRow
-                key={district?.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center">{district?.title}</TableCell>
-                <TableCell align="center" className="flex justify-center items-center">
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={district?.districtImage}
-                    sx={{ width: 80, height: 80 }}
-                  />
-                </TableCell>
-
-                <TableCell align="center">{district?.createdAt}</TableCell>
-
-                <TableCell align="center">
-                  <span className="flex gap-4 justify-center items-center">
-                    <Link
-                      href={`/super-admin/district/edit/${district?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <EditIcon />
-                    </Link>
-                    <ButtonComponent onclick={() => handleDelete(district?.id)}>
-                      <DeleteIcon />
-                    </ButtonComponent>
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
+            <TableBody>
+              {rows !== undefined &&
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.createdAt}
+                      >
+                        <TableCell>{row.title}</TableCell>
+                        <TableCell>
+                          <Avatar
+                            alt="Travis Howard"
+                            src={row?.districtImage}
+                            sx={{ width: 70, height: 70 }}
+                            variant="square"
+                          />
+                        </TableCell>
+                        <TableCell>{row?.createdAt}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Link
+                              href={`/super-admin/district/edit/${row?.id}`}
+                              className="text-blue-500 text-xl"
+                            >
+                              <ButtonComponent>
+                                <EditIcon />
+                              </ButtonComponent>
+                            </Link>
+                            <ButtonComponent
+                              onclick={() => handleDelete(row?.id)}
+                            >
+                              <DeleteIcon />
+                            </ButtonComponent>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+            </TableBody>
           </TableComponent>
         )}
       </DetailsTab>

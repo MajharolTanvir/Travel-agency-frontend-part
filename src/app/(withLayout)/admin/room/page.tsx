@@ -2,34 +2,27 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import dayjs from "dayjs";
 import { useDeleteHotelMutation } from "@/redux/api/HotelApi";
 import { useGetAllRoomQuery } from "@/redux/api/RoomApi";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CachedIcon from "@mui/icons-material/Cached";
 import { useDebounced } from "@/redux/hook";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
-import { Input, TableCell, TableRow } from "@mui/material";
+import { Avatar, Input, TableBody, TableCell, TableRow } from "@mui/material";
 import ButtonComponent from "@/components/UI/buttonComponent";
-import TableComponent from "@/components/UI/tableComponent";
+import TableComponent from "@/components/UI/TableComponent";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 
 const Room = () => {
   const query: Record<string, any> = {};
-
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const { data, isLoading } = useGetAllRoomQuery({ ...query });
   const [deleteHotel] = useDeleteHotelMutation();
-
-  query["limit"] = limit;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -40,15 +33,12 @@ const Room = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllRoomQuery({ ...query });
   if (isLoading) {
     return <p>Loading..........</p>;
   }
 
   //@ts-ignore
   const rooms = data?.room;
-  //@ts-ignore
-  const meta = data?.meta;
 
   const handleDelete = (id: string) => {
     deleteHotel(id);
@@ -64,23 +54,9 @@ const Room = () => {
     { id: "action", label: "Action" },
   ];
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setLimit(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const rows = rooms;
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
     setSearchTerm("");
   };
 
@@ -107,7 +83,7 @@ const Room = () => {
             <Link href="/admin/room/create-room">
               <ButtonComponent>Create Room</ButtonComponent>
             </Link>
-            {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            {searchTerm && (
               <ButtonComponent onclick={resetFilters}>
                 <CachedIcon />
               </ButtonComponent>
@@ -117,46 +93,68 @@ const Room = () => {
         {data && (
           <TableComponent
             columns={columns}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            limit={limit}
+            rows={rows}
+            setPage={setPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
             page={page}
-            meta={meta}
           >
-            {rooms?.map((room: any) => (
-              <TableRow
-                key={room?.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center">{room?.roomType}</TableCell>
-                <TableCell align="center">{room?.roomPrice}</TableCell>
-                <TableCell align="center">{room?.checkInTime}</TableCell>
-                <TableCell align="center">{room?.checkOutTime}</TableCell>
-                <TableCell align="center">{room?.hotel?.title}</TableCell>
-
-                <TableCell align="center">{room?.createdAt}</TableCell>
-
-                <TableCell align="center">
-                  <span className="flex gap-4 justify-center items-center">
-                    <Link
-                      href={`/admin/room/details/${room?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <RemoveRedEyeIcon />
-                    </Link>
-                    <Link
-                      href={`/admin/room/edit/${room?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <EditIcon />
-                    </Link>
-                    <ButtonComponent onclick={() => handleDelete(room?.id)}>
-                      <DeleteIcon />
-                    </ButtonComponent>
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
+            <TableBody>
+              {rows !== undefined &&
+                rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: any) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.createdAt}
+                      >
+                        <TableCell>{row.roomType}</TableCell>
+                        <TableCell>{row.roomPrice}</TableCell>
+                        <TableCell>{row.checkInTime}</TableCell>
+                        <TableCell>{row.checkOutTime}</TableCell>
+                        <TableCell>{row.hotel.hotelName}</TableCell>
+                        <TableCell>
+                          <Avatar
+                            alt="Travis Howard"
+                            src={row?.placeImage}
+                            sx={{ width: 70, height: 70 }}
+                            variant="square"
+                          />
+                        </TableCell>
+                        <TableCell>{row?.district?.title}</TableCell>
+                        <TableCell>{row?.createdAt}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-3">
+                            <Link
+                              href={`/admin/room/edit/${row?.id}`}
+                              className="text-blue-500 text-xl"
+                            >
+                              <ButtonComponent>
+                                <EditIcon />
+                              </ButtonComponent>
+                            </Link>
+                            <Link
+                              href={`/admin/room/details/${row?.id}`}
+                              className="text-blue-500 text-xl"
+                            >
+                              <ButtonComponent>
+                                <VisibilityIcon />
+                              </ButtonComponent>
+                            </Link>
+                            <ButtonComponent
+                              onclick={() => handleDelete(row?.id)}
+                            >
+                              <DeleteIcon />
+                            </ButtonComponent>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+            </TableBody>
           </TableComponent>
         )}
       </DetailsTab>
