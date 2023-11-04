@@ -107,7 +107,7 @@ export default function DashboardLayout({
         <Divider />
         <MenuItems />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
         <div
           className={` ${
             open == false ? "mx-auto " : "lg:pl-20"

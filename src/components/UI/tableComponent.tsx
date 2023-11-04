@@ -28,7 +28,7 @@ const TableComponent = ({
         >
           <TableHead sx={{ backgroundColor: "#30029010 " }}>
             <TableRow>
-              {columns.map((column: { id: React.Key; label: string }) => (
+              {columns?.map((column: { id: React.Key; label: string }) => (
                 <TableCell key={column.id} align="center">
                   {column.label}
                 </TableCell>

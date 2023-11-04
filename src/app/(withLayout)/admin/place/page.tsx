@@ -1,10 +1,6 @@
 "use client";
-
 import Link from "next/link";
 import React, { useState } from "react";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import CachedIcon from "@mui/icons-material/Cached";
 import {
   useDeletePlaceMutation,
@@ -12,26 +8,32 @@ import {
 } from "@/redux/api/PlaceApi";
 import { useDebounced } from "@/redux/hook";
 import ButtonComponent from "@/components/UI/buttonComponent";
-import { DeleteOutlined, EditOutlined } from "@mui/icons-material";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import DetailsTab from "@/components/UI/detailsTab";
-import { Avatar, Input, TableCell, TableRow } from "@mui/material";
-import TableComponent from "@/components/UI/tableComponent";
+import { Input, TableCell, TableRow } from "@mui/material";
+import TableComponent from "@/components/UI/TableComponent";
+import { Avatar } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import DeleteIcon from "@mui/icons-material/Delete";
+import TableBody from "@mui/material/TableBody";
+import { IPlace } from "@/types";
+
+export interface PlaceColumn {
+  id: "title" | "placeImage" | "district" | "createdAt" | "action";
+  label: string;
+  minWidth?: number;
+  align?: "right";
+  format?: (value: number) => string;
+}
 
 const Place = () => {
   const query: Record<string, any> = {};
-
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [deletePlace] = useDeletePlaceMutation();
-
-  query["limit"] = limit;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
+  const { data, isLoading } = useGetAllPlaceQuery({ ...query });
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -42,40 +44,36 @@ const Place = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllPlaceQuery({ ...query });
+  if (isLoading) {
+    <p>Loading....</p>;
+  }
+
   //@ts-ignore
   const places = data?.place;
-  //@ts-ignore
-  const meta = data?.meta;
 
   const handleDelete = (id: string) => {
     deletePlace(id);
   };
 
-  const columns: any = [
-    { id: "title", label: "Division name" },
-    { id: "districtImage", label: "District Image" },
-    { id: "createdAt", label: "Created At" },
-    { id: "action", label: "Action" },
+  const columns: PlaceColumn[] = [
+    { id: "title", label: "Place name", minWidth: 170 },
+    { id: "placeImage", label: "Place image", minWidth: 100 },
+    { id: "district", label: "District", minWidth: 100 },
+    {
+      id: "createdAt",
+      label: "Created At",
+      minWidth: 170,
+    },
+    {
+      id: "action",
+      label: "Action",
+      minWidth: 170,
+    },
   ];
 
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setLimit(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+  const rows = places;
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
     setSearchTerm("");
   };
 
@@ -102,63 +100,70 @@ const Place = () => {
             <Link href="/admin/place/create-place">
               <ButtonComponent>Create Place</ButtonComponent>
             </Link>
-            {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            {!!searchTerm && (
               <ButtonComponent onclick={resetFilters}>
                 <CachedIcon />
               </ButtonComponent>
             )}
           </div>
         </div>
+
         {data && (
-          <TableComponent
-            columns={columns}
-            handleChangePage={handleChangePage}
-            handleChangeRowsPerPage={handleChangeRowsPerPage}
-            limit={limit}
-            page={page}
-            meta={meta}
-          >
-            {places?.map((place: any) => (
-              <TableRow
-                key={place?.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell align="center">{place?.title}</TableCell>
-                <TableCell
-                  align="center"
-                  className="flex justify-center items-center"
-                >
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={place?.placeImage}
-                    sx={{ width: 80, height: 80 }}
-                  />
-                </TableCell>
-
-                <TableCell align="center">{place?.createdAt}</TableCell>
-
-                <TableCell align="center">
-                  <span className="flex gap-4 justify-center items-center">
-                    {/* <Link
-                      href={`admin/place/details/${place?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <RemoveRedEyeIcon />
-                    </Link> */}
-                    <Link
-                      href={`/admin/place/edit/${place?.id}`}
-                      className="text-blue-500 text-xl"
-                    >
-                      <EditIcon />
-                    </Link>
-                    <ButtonComponent onclick={() => handleDelete(place?.id)}>
-                      <DeleteIcon />
-                    </ButtonComponent>
-                  </span>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableComponent>
+          <div>
+            <TableComponent
+              columns={columns}
+              rows={rows}
+              setPage={setPage}
+              rowsPerPage={rowsPerPage}
+              setRowsPerPage={setRowsPerPage}
+              page={page}
+            >
+              <TableBody>
+                {rows !== undefined &&
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row: any) => {
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={row.createdAt}
+                        >
+                          <TableCell>{row.title}</TableCell>
+                          <TableCell>
+                            <Avatar
+                              alt="Travis Howard"
+                              src={row?.placeImage}
+                              sx={{ width: 70, height: 70 }}
+                              variant="square"
+                            />
+                          </TableCell>
+                          <TableCell>{row?.district?.title}</TableCell>
+                          <TableCell>{row?.createdAt}</TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-3">
+                              <Link
+                                href={`/admin/place/edit/${row?.id}`}
+                                className="text-blue-500 text-xl"
+                              >
+                                <ButtonComponent>
+                                  <EditIcon />
+                                </ButtonComponent>
+                              </Link>
+                              <ButtonComponent
+                                onclick={() => handleDelete(row?.id)}
+                              >
+                                <DeleteIcon />
+                              </ButtonComponent>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+              </TableBody>
+            </TableComponent>
+          </div>
         )}
       </DetailsTab>
     </div>
