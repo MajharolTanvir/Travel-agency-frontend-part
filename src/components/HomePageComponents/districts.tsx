@@ -8,6 +8,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { IDistrict } from "@/types";
 import ButtonComponent from "../UI/buttonComponent";
+import Image from "next/image";
 
 const Districts = () => {
   const { data, isLoading } = useGetAllDistrictQuery({});
@@ -17,23 +18,17 @@ const Districts = () => {
   }
 
   //@ts-ignore
-  const districts = data?.district.slice(0, 6);
+  const districts = data?.district.slice(0, 8);
   const {total}: any = data?.meta
   return (
     <div>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-center">
-        CHOSE YOUR DREAM CITY - {total}
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start">
+        Visit Bangladesh
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center items-center gap-5 my-10">
         {districts?.map((district: IDistrict) => (
           <Card key={district?.id} sx={{ maxWidth: 345 }}>
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              height="100"
-              className="h-60"
-              image={district?.districtImage}
-            />
+            <Image src={district?.districtImage} alt="district image" className="w-80 h-60" width={200} height={200} />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {district?.title}

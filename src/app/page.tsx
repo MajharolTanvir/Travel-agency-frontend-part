@@ -6,7 +6,6 @@ import styles from "./home.module.css";
 import Districts from "@/components/HomePageComponents/districts";
 import Places from "@/components/HomePageComponents/places";
 import Services from "@/components/HomePageComponents/services";
-import UpcomingServices from "@/components/HomePageComponents/upcomingServices";
 import Blogs from "@/components/HomePageComponents/blogs";
 import Testimonials from "@/components/HomePageComponents/testimonials";
 import ButtonComponent from "@/components/UI/buttonComponent";
@@ -38,28 +37,18 @@ export default function Home() {
 
       <Container maxWidth="xl" className="mx-auto">
         <section className="mb-20">
-          <Districts />
-        </section>
-        <section className="mb-20">
           <Places />
         </section>
         <section className="mb-20">
           <Services />
         </section>
         <section className="mb-20">
-          <UpcomingServices />
+          <Districts />
         </section>
         <section className="mb-20">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-center">
-            Our blogs
-          </h1>
           <Blogs />
         </section>
-
         <section className="mb-20">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-center">
-            Client reviews
-          </h1>
           <Testimonials />
         </section>
       </Container>
