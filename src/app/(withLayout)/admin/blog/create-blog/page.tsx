@@ -33,10 +33,10 @@ const CreateBlog = () => {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="w-60 md:w-[400px] p-5 md:p-10 shadow-xl">
+        <h1 className="text-xl md:text-2xl font-bold text-center my-2">
+          Blog post
+        </h1>
         <Form submitHandler={onSubmit}>
-          <h1 className="text-xl md:text-2xl font-bold text-center my-2">
-            Blog post
-          </h1>
           <div>
             <FormInput name="title" label="Title" size="large" type="text" />
           </div>
