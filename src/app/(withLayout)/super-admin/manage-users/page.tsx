@@ -12,6 +12,7 @@ import CachedIcon from "@mui/icons-material/Cached";
 import { Input, TableBody, TableCell, TableRow } from "@mui/material";
 import Link from "next/link";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import Spinner from "@/components/UI/Spinner";
 
 export interface UserColumn {
   id: "firstName" | "middleName" | "lastName" | "email" | "role" | "action";
@@ -38,7 +39,7 @@ const ManageUser = () => {
   }
 
   if (isLoading) {
-    return <p>Loading......</p>;
+    return <Spinner />;
   }
 
   //@ts-ignore

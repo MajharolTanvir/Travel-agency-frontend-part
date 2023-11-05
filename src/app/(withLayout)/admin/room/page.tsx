@@ -14,6 +14,7 @@ import { Avatar, Input, TableBody, TableCell, TableRow } from "@mui/material";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import TableComponent from "@/components/UI/TableComponent";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import Spinner from "@/components/UI/Spinner";
 
 
 const Room = () => {
@@ -34,7 +35,7 @@ const Room = () => {
   }
 
   if (isLoading) {
-    return <p>Loading..........</p>;
+    return <Spinner />;
   }
 
   //@ts-ignore

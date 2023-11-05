@@ -1,11 +1,9 @@
-"use client";
+import React from 'react'
+import { Grid } from 'react-loader-spinner';
 
-import React from "react";
-import { Grid } from "react-loader-spinner";
-
-const Loading = () => {
+const Spinner = () => {
   return (
-    <div className="flex justify-center items-center h-screen bg-white">
+    <div className="flex justify-center items-center h-screen">
       <Grid
         height="80"
         width="80"
@@ -18,6 +16,6 @@ const Loading = () => {
       />
     </div>
   );
-};
+}
 
-export default Loading;
+export default Spinner

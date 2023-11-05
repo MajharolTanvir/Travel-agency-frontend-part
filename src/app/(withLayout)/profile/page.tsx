@@ -8,6 +8,7 @@ import Link from "next/link";
 import ViewFeedback from "@/components/UI/ViewFeedback";
 import { getUserInfo } from "@/services/auth.services";
 import { UserInfoProps } from "@/types";
+import Spinner from "@/components/UI/Spinner";
 
 const Profile = () => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -25,7 +26,7 @@ const Profile = () => {
   const open = Boolean(anchorEl);
 
   if (isLoading) {
-    <p>Loading....</p>;
+    return <Spinner />;
   }
 
   return (

@@ -15,6 +15,7 @@ import TableComponent from "@/components/UI/TableComponent";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CachedIcon from "@mui/icons-material/Cached";
 import EditIcon from "@mui/icons-material/Edit";
+import Spinner from "@/components/UI/Spinner";
 
 export interface DivisionColumn {
   id: "title" | "createdAt" | "action";
@@ -42,7 +43,7 @@ const Division = () => {
   }
 
   if (isLoading) {
-    return <p>Loading......</p>;
+    return <Spinner />;
   }
 
   //@ts-ignore

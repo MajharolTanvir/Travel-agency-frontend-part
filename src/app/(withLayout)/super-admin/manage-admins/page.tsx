@@ -11,6 +11,7 @@ import { useDebounced } from "@/redux/hook";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import CachedIcon from "@mui/icons-material/Cached";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import Spinner from "@/components/UI/Spinner";
 
 export interface AdminColumn {
   id: "firstName" | "middleName" | "lastName" | "email" | "role" | "action";
@@ -37,7 +38,7 @@ const ManageAdmin = () => {
   const { data, isLoading } = useGetAllAdminQuery({});
 
   if (isLoading) {
-    return <p>Loading......</p>;
+    return <Spinner />;
   }
 
   const columns: readonly AdminColumn[] = [

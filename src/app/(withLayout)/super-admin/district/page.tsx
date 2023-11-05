@@ -16,6 +16,7 @@ import TableComponent from "@/components/UI/TableComponent";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Spinner from "@/components/UI/Spinner";
 
 export interface HotelColumn {
   id: "title" | "districtImage" | "createdAt" | "action";
@@ -43,7 +44,7 @@ const District = () => {
   }
 
   if (isLoading) {
-    return <p>Loading......</p>;
+    return <Spinner />
   }
 
   //@ts-ignore

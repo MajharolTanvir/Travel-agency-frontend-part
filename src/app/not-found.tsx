@@ -1,12 +1,12 @@
 import Image from "next/image";
 import React from "react";
-// import errorImage from "../assets/Error.gif";
+import errorImage from "../assets/not_found.png";
 
 const NotFound = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
       <div>
-        {/* <Image src={errorImage} width={600} alt="Error image" /> */}
+        <Image src={errorImage} width={600} alt="Error image" />
         <h2 style={{ textAlign: "center", color: "white" }}>
           404!!! Not found!
         </h2>

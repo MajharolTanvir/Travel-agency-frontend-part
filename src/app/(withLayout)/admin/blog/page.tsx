@@ -10,11 +10,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import Link from "next/link";
+import Spinner from "@/components/UI/Spinner";
 
 const Blog = () => {
   const { data, isLoading } = useGetAllBlogQuery({});
   if (isLoading) {
-    return <p>Loading.....</p>;
+    return <Spinner />;
   }
 
   const blogs = data?.blog;

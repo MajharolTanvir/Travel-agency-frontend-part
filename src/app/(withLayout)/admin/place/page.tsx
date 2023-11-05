@@ -16,6 +16,7 @@ import { Avatar } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableBody from "@mui/material/TableBody";
+import Spinner from "@/components/UI/Spinner";
 
 export interface PlaceColumn {
   id: "title" | "placeImage" | "district" | "createdAt" | "action";
@@ -43,7 +44,7 @@ const Place = () => {
   }
 
   if (isLoading) {
-    <p>Loading....</p>;
+    return <Spinner />
   }
 
   //@ts-ignore
