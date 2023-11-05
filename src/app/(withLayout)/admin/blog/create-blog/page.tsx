@@ -13,8 +13,8 @@ import Swal from "sweetalert2";
 
 const CreateBlog = () => {
   const [createBlog] = useCreateBlogMutation();
-    const [imageUrl, setImageUrl] = useState<string | undefined>();
-    const { userId } = getUserInfo() as UserInfoProps;
+  const [imageUrl, setImageUrl] = useState<string | undefined>();
+  const { userId } = getUserInfo() as UserInfoProps;
 
   const onSubmit = async (data: any) => {
     data.thumbnail = imageUrl && imageUrl;
@@ -34,7 +34,7 @@ const CreateBlog = () => {
     <div className="min-h-screen flex justify-center items-center">
       <div className="w-60 md:w-[400px] p-5 md:p-10 shadow-xl">
         <Form submitHandler={onSubmit}>
-          <h1 className="text-xl md:text-2xl font-bold text-center">
+          <h1 className="text-xl md:text-2xl font-bold text-center my-2">
             Blog post
           </h1>
           <div>
@@ -42,7 +42,7 @@ const CreateBlog = () => {
           </div>
 
           <div>
-            <FormTextArea rows={4} name="description" label="Description" />
+            <FormTextArea rows={8} name="description" label="Description" />
           </div>
 
           <div className="my-5">
@@ -52,8 +52,7 @@ const CreateBlog = () => {
             ></ImageUpload>
           </div>
 
-            <ButtonComponent>Submit</ButtonComponent>
-        
+          <ButtonComponent>Submit</ButtonComponent>
         </Form>
       </div>
     </div>

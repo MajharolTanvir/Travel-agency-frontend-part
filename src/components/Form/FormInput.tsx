@@ -85,12 +85,11 @@ const FormInput = ({
             </>
           ) : (
             <FormControl
-              sx={{ m: 1, width: "100%" }}
               variant="filled"
-              className="text-violet-700"
+              className="text-violet-700 w-full mb-2"
             >
               <TextField
-                className="w-full mb-2 p-2"
+                className="w-full"
                 {...field}
                 label={label}
                 variant="standard"

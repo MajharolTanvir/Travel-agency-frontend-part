@@ -14,8 +14,8 @@ import { Avatar, Input, TableBody, TableCell, TableRow } from "@mui/material";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CachedIcon from "@mui/icons-material/Cached";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import CachedIcon from "@mui/icons-material/Cached";
 import Spinner from "@/components/UI/Spinner";
 
 export interface HotelColumn {

@@ -19,7 +19,8 @@ import TemporaryDrawer from "./drewer";
 import logo from "../../assets/logo.png";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { isLoggedIn } from "@/services/auth.services";
+import { isLoggedIn, removeUserInfo } from "@/services/auth.services";
+import { authKey } from "@/constant/storageKey";
 
 const pages = [
   { label: "Home", link: "/" },
@@ -32,27 +33,35 @@ const Navbar = () => {
   const pathname = usePathname();
   const loggedIn = isLoggedIn();
 
+  const SignOut = () => {
+    removeUserInfo(authKey);
+  };
+
   const settings = [
     {
+      key: 1,
       label: "Profile",
       link: "/profile",
     },
-    {
-      label: "Dashboard",
-      link: "/dashboard",
-    },
+    { key: 2, label: "Dashboard", link: "/dashboard" },
     !loggedIn
       ? {
+          key: 3,
           label: "Login",
           link: "/auth/login",
         }
       : null,
     !loggedIn
       ? {
+          key: 4,
           label: "Signup",
           link: "/auth/signup",
         }
-      : null,
+      : {
+          key: 5,
+          label: <button onClick={SignOut}>Sign out</button>,
+          link: "/auth/login",
+        },
   ].filter(Boolean);
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -158,8 +167,8 @@ const Navbar = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting?.label} onClick={handleCloseUserMenu}>
+                {settings.map((setting: any) => (
+                  <MenuItem key={setting?.key} onClick={handleCloseUserMenu}>
                     <Link
                       className={`${
                         pathname === setting?.link

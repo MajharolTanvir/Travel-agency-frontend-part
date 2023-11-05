@@ -4,13 +4,12 @@ import Form from "@/components/Form/Form";
 import FormInput from "@/components/Form/FormInput";
 import FormTextArea from "@/components/Form/FormTextArea";
 import ImageUpload from "@/components/Form/UploadSingleImage";
+import Spinner from "@/components/UI/Spinner";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import {
   useGetSingleBlogQuery,
   useUpdateBlogMutation,
 } from "@/redux/api/BlogApi";
-import { getUserInfo } from "@/services/auth.services";
-import { UserInfoProps } from "@/types";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -25,7 +24,7 @@ const UpdateBlog = ({ params }: IDProps) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
 
   if (isLoading) {
-    return <p>Loading.....</p>;
+    return <Spinner />;
   }
 
   const onSubmit = async (data: any) => {

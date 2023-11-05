@@ -12,6 +12,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { isLoggedIn } from "@/services/auth.services";
 import { useRouter } from "next/navigation";
 import MenuItems from "./MenuItems";
+import Link from "next/link";
 
 const drawerWidth = 240;
 
@@ -113,6 +114,9 @@ export default function DashboardLayout({
             open == false ? "mx-auto " : "lg:pl-20"
           } lg:max-w-full  `}
         >
+          <div className="h-14 flex justify-end items-center border-b px-2">
+            <Link className="font-medium" href='/'>Home</Link>
+          </div>
           {children}
         </div>
       </Box>
