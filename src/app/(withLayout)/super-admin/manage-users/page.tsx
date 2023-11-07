@@ -27,8 +27,7 @@ const ManageUser = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const { data, isLoading } = useGetAllProfileQuery({ ...query });
-
+  
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -38,6 +37,7 @@ const ManageUser = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
+  const { data, isLoading } = useGetAllProfileQuery({ ...query });
   if (isLoading) {
     return <Spinner />;
   }

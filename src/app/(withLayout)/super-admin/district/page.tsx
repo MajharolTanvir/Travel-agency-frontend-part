@@ -32,8 +32,7 @@ const District = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [deleteDistrict] = useDeleteDistrictMutation();
-  const { data, isLoading } = useGetAllDistrictQuery({ ...query });
-
+  
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -42,7 +41,8 @@ const District = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-
+  
+  const { data, isLoading } = useGetAllDistrictQuery({ ...query });
   if (isLoading) {
     return <Spinner />
   }

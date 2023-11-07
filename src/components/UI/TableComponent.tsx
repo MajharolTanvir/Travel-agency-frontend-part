@@ -28,7 +28,6 @@ export default function StickyHeadTable({
   children,
 }: TableProps) {
 
-  console.log(rows);
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };

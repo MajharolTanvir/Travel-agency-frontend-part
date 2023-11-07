@@ -31,9 +31,8 @@ const Blog = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const { data, isLoading } = useGetAllBlogQuery({...query});
   const [deleteBlog] = useDeleteBlogMutation();
-
+  
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -42,7 +41,8 @@ const Blog = () => {
   if (!!debouncedSearchTerm) {
     query["searchTerm"] = debouncedSearchTerm;
   }
-
+  
+  const { data, isLoading } = useGetAllBlogQuery({...query});
   if (isLoading) {
     return <Spinner />;
   }

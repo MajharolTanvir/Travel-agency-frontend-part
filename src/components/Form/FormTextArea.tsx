@@ -7,30 +7,32 @@ interface ITextArea {
   name: string;
   label?: string;
   rows?: number;
-  value?: string | string[] | undefined;
   placeholder?: string;
+  defaultValue?: string
 }
 
-const FormTextArea = ({ name, rows, value, placeholder, label }: ITextArea) => {
+const FormTextArea = ({
+  name,
+  rows,
+  placeholder,
+  label,
+  defaultValue,
+}: ITextArea) => {
   const { control } = useFormContext();
   return (
     <div className="flex flex-col">
-      {label ? (
-        <InputLabel className="text-[#485563] mt-2" htmlFor={name}>
-          {label}
-        </InputLabel>
-      ) : null}
       <Controller
         control={control}
         name={name}
         render={({ field }) => (
           <TextField
             {...field}
-            id="standard-multiline-static"
+            id="outlined-multiline-static"
             multiline
             rows={rows}
             placeholder={placeholder}
-            defaultValue={value}
+            defaultValue={defaultValue}
+            label={label}
             variant="standard"
           />
         )}

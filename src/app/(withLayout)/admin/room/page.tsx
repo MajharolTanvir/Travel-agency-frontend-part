@@ -20,11 +20,10 @@ import Spinner from "@/components/UI/Spinner";
 const Room = () => {
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const { data, isLoading } = useGetAllRoomQuery({ ...query });
   const [deleteHotel] = useDeleteHotelMutation();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
     delay: 600,
@@ -34,6 +33,7 @@ const Room = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
+  const { data, isLoading } = useGetAllRoomQuery({ ...query });
   if (isLoading) {
     return <Spinner />;
   }

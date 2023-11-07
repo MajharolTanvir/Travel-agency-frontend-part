@@ -28,11 +28,10 @@ export interface PlaceColumn {
 
 const Place = () => {
   const query: Record<string, any> = {};
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [deletePlace] = useDeletePlaceMutation();
-  const { data, isLoading } = useGetAllPlaceQuery({ ...query });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [searchTerm, setSearchTerm] = useState<string>("");
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -43,8 +42,9 @@ const Place = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
+  const { data, isLoading } = useGetAllPlaceQuery({ ...query });
   if (isLoading) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   //@ts-ignore

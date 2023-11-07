@@ -1,29 +1,31 @@
 "use client";
 
-import { useDebounced } from "@/redux/hook";
+import ButtonComponent from "@/components/UI/buttonComponent";
+import DetailsTab from "@/components/UI/detailsTab";
+import { Avatar, Input, TableBody, TableCell, TableRow } from "@mui/material";
 import Link from "next/link";
 import React, { useState } from "react";
 import {
-  useDeleteHotelMutation,
-  useGetAllHotelQuery,
-} from "@/redux/api/HotelApi";
-import TableComponent from "@/components/UI/TableComponent";
-import BreadcrumbsComponent from "@/components/UI/breadCrumb";
-import DetailsTab from "@/components/UI/detailsTab";
-import { Avatar, Input, TableBody, TableCell, TableRow } from "@mui/material";
-import ButtonComponent from "@/components/UI/buttonComponent";
+  useDeletePackagePlanMutation,
+  useGetAllPackagePlanQuery,
+} from "@/redux/api/PackageApi";
+import Spinner from "@/components/UI/Spinner";
+import { useDebounced } from "@/redux/hook";
+import CachedIcon from "@mui/icons-material/Cached";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import CachedIcon from "@mui/icons-material/Cached";
-import Spinner from "@/components/UI/Spinner";
+import TableComponent from "@/components/UI/TableComponent";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 
 export interface HotelColumn {
   id:
-    | "title"
-    | "hotelImage"
-    | "contactNo"
-    | "location"
+    | "packageName"
+    | "thumbnail"
+    | "travelerSize"
+    | "startLocation"
+    | "endLocation"
+    | "contactManager"
     | "createdAt"
     | "action";
   label: string;
@@ -32,12 +34,12 @@ export interface HotelColumn {
   format?: (value: number) => string;
 }
 
-const Hotel = () => {
+const PackagePage = () => {
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [deleteHotel] = useDeleteHotelMutation();
+  const [deletePackagePlan] = useDeletePackagePlanMutation();
   
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -48,28 +50,28 @@ const Hotel = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
   
-  const { data, isLoading } = useGetAllHotelQuery({ ...query });
+  const { data, isLoading } = useGetAllPackagePlanQuery({ ...query });
   if (isLoading) {
     return <Spinner />;
   }
 
-  //@ts-ignore
-  const hotels = data?.hotel;
-
-  const handleDelete = (id: string) => {
-    deleteHotel(id);
-  };
-
   const columns: HotelColumn[] = [
-    { id: "title", label: "Division name", minWidth: 170 },
-    { id: "hotelImage", label: "Hotel Image", minWidth: 170 },
-    { id: "contactNo", label: "Contact No", minWidth: 170 },
-    { id: "location", label: "Location", minWidth: 170 },
+    { id: "packageName", label: "Package name", minWidth: 170 },
+    { id: "thumbnail", label: "Image", minWidth: 170 },
+    { id: "travelerSize", label: "Traveler size", minWidth: 170 },
+    { id: "startLocation", label: "Start location", minWidth: 170 },
+    { id: "endLocation", label: "End location", minWidth: 170 },
+    { id: "contactManager", label: "Contact manager", minWidth: 170 },
     { id: "createdAt", label: "Created At", minWidth: 170 },
     { id: "action", label: "Action", minWidth: 170 },
   ];
 
-  const rows = hotels;
+  //@ts-ignore
+  const rows = data?.packagePlan;
+
+  const handleDelete = (id: string) => {
+    deletePackagePlan(id);
+  };
 
   const resetFilters = () => {
     setSearchTerm("");
@@ -77,15 +79,7 @@ const Hotel = () => {
 
   return (
     <div>
-      <BreadcrumbsComponent
-        items={[
-          {
-            label: "Admin",
-            link: "/admin",
-          },
-        ]}
-      />
-      <DetailsTab title="Manage Hotel">
+      <DetailsTab title="Manage Package">
         <div className="md:flex justify-between items-center gap-5 mb-5">
           <Input
             placeholder="Search"
@@ -95,8 +89,8 @@ const Hotel = () => {
             }}
           />
           <div className="flex justify-between items-center gap-2">
-            <Link href="/admin/hotel/create-hotel">
-              <ButtonComponent>Create Hotel</ButtonComponent>
+            <Link href="/admin/package/create-package">
+              <ButtonComponent>Create Package</ButtonComponent>
             </Link>
             {!!searchTerm && (
               <ButtonComponent onclick={resetFilters}>
@@ -126,22 +120,32 @@ const Hotel = () => {
                         tabIndex={-1}
                         key={row.createdAt}
                       >
-                        <TableCell>{row.title}</TableCell>
+                        <TableCell>{row.packageName}</TableCell>
                         <TableCell>
                           <Avatar
                             alt="Travis Howard"
-                            src={row?.hotelImage}
+                            src={row?.thumbnail}
                             sx={{ width: 70, height: 70 }}
                             variant="square"
                           />
                         </TableCell>
-                        <TableCell>{row?.contactNo}</TableCell>
-                        <TableCell>{row?.location}</TableCell>
+                        <TableCell>{row?.travelerSize}</TableCell>
+                        <TableCell>{row?.startLocation}</TableCell>
+                        <TableCell>{row?.endLocation}</TableCell>
+                        <TableCell>{row?.contactManager}</TableCell>
                         <TableCell>{row?.createdAt}</TableCell>
                         <TableCell>
                           <div className="flex items-center gap-3">
                             <Link
-                              href={`/admin/place/edit/${row?.id}`}
+                              href={`/admin/package/add-places/${row?.id}`}
+                              className="text-blue-500 text-xl"
+                            >
+                              <ButtonComponent>
+                                <AddLocationAltIcon />
+                              </ButtonComponent>
+                            </Link>
+                            <Link
+                              href={`/admin/package/edit/${row?.id}`}
                               className="text-blue-500 text-xl"
                             >
                               <ButtonComponent>
@@ -149,7 +153,7 @@ const Hotel = () => {
                               </ButtonComponent>
                             </Link>
                             <Link
-                              href={`/admin/place/details/${row?.id}`}
+                              href={`/admin/package/details/${row?.id}`}
                               className="text-blue-500 text-xl"
                             >
                               <ButtonComponent>
@@ -174,4 +178,4 @@ const Hotel = () => {
   );
 };
 
-export default Hotel;
+export default PackagePage;

@@ -6,6 +6,7 @@ import FormSelectFields from "@/components/Form/FormSelectField";
 import FormTextArea from "@/components/Form/FormTextArea";
 import FormTimePicker from "@/components/Form/FormTimePicker";
 import MultipleImageUpload from "@/components/Form/UploadMultipleImage";
+import Spinner from "@/components/UI/Spinner";
 import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import DetailsTab from "@/components/UI/detailsTab";
@@ -28,7 +29,7 @@ const CreateRoom = () => {
   const { data: hotelData, isLoading } = useGetAllHotelQuery({});
 
   if (isLoading) {
-    <p>Loading.............</p>;
+    return <Spinner />
   }
   const hotels = hotelData?.hotel;
   const hotelOptions = hotels?.map((hotel) => {

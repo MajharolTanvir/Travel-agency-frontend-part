@@ -1,9 +1,7 @@
 "use client";
 
 import { USER_ROLE } from "@/constant/role";
-import { getUserInfo, removeUserInfo } from "@/services/auth.services";
-import { authKey } from "@/constant/storageKey";
-import Swal from "sweetalert2";
+import { getUserInfo } from "@/services/auth.services";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import PersonIcon from "@mui/icons-material/Person";
@@ -16,6 +14,7 @@ import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import { UserInfoProps } from "@/types";
 import ForumIcon from "@mui/icons-material/Forum";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
+import Inventory2Icon from "@mui/icons-material/Inventory2";
 
 export const DashBoardItems = (logout: any) => {
   const { role } = getUserInfo() as UserInfoProps;
@@ -79,6 +78,11 @@ export const DashBoardItems = (logout: any) => {
       icon: <RssFeedIcon />,
       link: "/admin/blog",
       level: "Blog",
+    },
+    {
+      icon: <Inventory2Icon />,
+      link: "/admin/package",
+      level: "Manage Package",
     },
     {
       icon: <ForumIcon />,
