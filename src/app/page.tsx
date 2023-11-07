@@ -9,6 +9,8 @@ import Services from "@/components/HomePageComponents/services";
 import Blogs from "@/components/HomePageComponents/blogs";
 import Testimonials from "@/components/HomePageComponents/testimonials";
 import ButtonComponent from "@/components/UI/buttonComponent";
+import Link from "next/link";
+import Package from "@/components/HomePageComponents/package";
 
 export default function Home() {
   return (
@@ -30,12 +32,17 @@ export default function Home() {
           </h1>
 
           <div className="flex justify-center items-center mt-5">
-            <ButtonComponent>Make your own plan</ButtonComponent>
+            <Link href="/user/custom-plan">
+              <ButtonComponent>Make your own plan</ButtonComponent>
+            </Link>
           </div>
         </div>
       </section>
 
       <Container maxWidth="xl" className="mx-auto">
+        <section className="mb-20">
+          <Package />
+        </section>
         <section className="mb-20">
           <Places />
         </section>
