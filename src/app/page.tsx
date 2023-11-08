@@ -31,11 +31,11 @@ export default function Home() {
             Explore the world with us!
           </h1>
 
-          <div className="flex justify-center items-center mt-5">
+          {/* <div className="flex justify-center items-center mt-5">
             <Link href="/user/custom-plan">
               <ButtonComponent>Make your own plan</ButtonComponent>
             </Link>
-          </div>
+          </div> */}
         </div>
       </section>
 

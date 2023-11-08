@@ -51,7 +51,6 @@ const PackagePage = () => {
   }
   
   const { data, isLoading } = useGetAllPackagePlanQuery({ ...query });
-  console.log(data)
   if (isLoading) {
     return <Spinner />;
   }

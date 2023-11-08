@@ -67,7 +67,7 @@ const Profile = () => {
             </div>
             <div className="mt-4 flex flex-col justify-around items-center w-full">
               <Avatar
-                alt="Remy Sharp"
+                alt="Profile image"
                 src={data?.Profile[0]?.profileImage}
                 sx={{ width: 80, height: 80 }}
                 className="mb-4"
