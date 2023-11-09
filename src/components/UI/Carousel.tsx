@@ -25,7 +25,7 @@ const CarouselCompo = ({ pack }: any) => {
             alt="Place images"
             width={400}
             height={400}
-            style={{ height: "400px", width: "100%" }}
+            style={{ height: "350px", width: "100%" }}
             className="w-full h-full transform transition-transform hover:scale-110 border rounded-md"
           />
           <div className="absolute inset-0 bg-black bg-opacity-70 text-white opacity-0 transition-opacity hover:opacity-100 flex items-center justify-center">

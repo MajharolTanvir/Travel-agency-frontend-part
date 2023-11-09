@@ -25,13 +25,10 @@ const Form = ({
   if (!!resolver) formConfig["resolver"] = resolver;
 
   const methods = useForm<FromProps>(formConfig);
-  const { handleSubmit, reset } = methods;
-
-  useEffect(() => reset(), [reset]);
+  const { handleSubmit } = methods;
 
   const onSubmit = (data: any) => {
     submitHandler(data);
-    reset();
   };
 
   return (

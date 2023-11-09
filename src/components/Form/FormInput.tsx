@@ -18,12 +18,13 @@ interface IInput {
   name: string;
   type?: string | number;
   size?: "large" | "small";
-  value?: string | string[] | undefined;
+  value?: string | string[] | number | undefined;
   id?: string;
   placeholder?: string;
   validation?: object;
   label?: string;
-  defaultValue?: string;
+  defaultValue?: string | number;
+  setMemberCount?: any;
 }
 
 const FormInput = ({
@@ -34,6 +35,7 @@ const FormInput = ({
   validation,
   label,
   defaultValue,
+  setMemberCount,
 }: IInput) => {
   const {
     control,
@@ -48,7 +50,6 @@ const FormInput = ({
   ) => {
     event.preventDefault();
   };
-
   const errorMessage = getErrorMessageByPropertyName(errors, name);
 
   return (

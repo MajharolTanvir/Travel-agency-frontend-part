@@ -1,8 +1,10 @@
+'use client'
+
 import React from "react";
 import Spinner from "../UI/Spinner";
 import { useGetAllPackagePlanQuery } from "@/redux/api/PackageApi";
 import Image from "next/image";
-import CarouselCompo from "@/redux/api/Carousel";
+import CarouselCompo from "@/components/UI/Carousel";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ButtonComponent from "../UI/buttonComponent";
 import Link from "next/link";

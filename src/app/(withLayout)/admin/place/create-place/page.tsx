@@ -9,7 +9,6 @@ import BreadcrumbsComponent from "@/components/UI/breadCrumb";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import DetailsTab from "@/components/UI/detailsTab";
 import { useGetAllDistrictQuery } from "@/redux/api/DistrictApi";
-import { useGetAllDivisionQuery } from "@/redux/api/DivisionApi";
 import { useCreatePlaceMutation } from "@/redux/api/PlaceApi";
 import React, { useState } from "react";
 import Swal from "sweetalert2";

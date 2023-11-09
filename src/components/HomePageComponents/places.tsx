@@ -1,3 +1,4 @@
+'use client'
 import { useGetAllPlaceQuery } from "@/redux/api/PlaceApi";
 import React from "react";
 import Card from "@mui/material/Card";

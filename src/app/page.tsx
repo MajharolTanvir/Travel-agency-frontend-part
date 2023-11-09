@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import Navbar from "@/components/Navbar/page";
 import { Container } from "@mui/material";
@@ -11,6 +11,13 @@ import Testimonials from "@/components/HomePageComponents/testimonials";
 import ButtonComponent from "@/components/UI/buttonComponent";
 import Link from "next/link";
 import Package from "@/components/HomePageComponents/package";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "QTP | Home",
+  description:
+    "Quick tour plan is a tour planing website where you can book any package, hotel rooms, Transports and many more functionality is here.",
+};
 
 export default function Home() {
   return (

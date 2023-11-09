@@ -1,3 +1,4 @@
+"use client"
 import { useGetAllDistrictQuery } from "@/redux/api/DistrictApi";
 import React from "react";
 import Card from "@mui/material/Card";

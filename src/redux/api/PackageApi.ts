@@ -31,7 +31,7 @@ export const packagePlanApi = baseApi.injectEndpoints({
     }),
 
     getSinglePackagePlan: build.query({
-      query: (id: string | string[] | undefined) => ({
+      query: (id: string) => ({
         url: `${PACKAGE_PLAN_URL}/${id}`,
         method: "GET",
       }),
