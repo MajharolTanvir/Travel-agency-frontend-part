@@ -1,5 +1,5 @@
 .backgroundImage {
-  background-image: url("../assets/hero_pic.jpg");
+  background-image: url("../assets/hero_Image.jpg");
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -10,7 +10,7 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .backgroundImage {
-    background-image: url("../assets/hero_pic.jpg");
+    background-image: url("../assets/hero_Image.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
@@ -22,7 +22,7 @@
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   .backgroundImage {
-    background-image: url("../assets/hero_pic.jpg");
+    background-image: url("../assets/hero_Image.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
@@ -34,7 +34,7 @@
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
   .backgroundImage {
-    background-image: url("../assets/hero_pic.jpg");
+    background-image: url("../assets/hero_Image.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
@@ -46,7 +46,7 @@
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
   .backgroundImage {
-    background-image: url("../assets/hero_pic.jpg");
+    background-image: url("../assets/hero_Image.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
@@ -58,7 +58,7 @@
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
   .backgroundImage {
-    background-image: url("../assets/hero_pic.jpg");
+    background-image: url("../assets/hero_Image.jpg");
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;

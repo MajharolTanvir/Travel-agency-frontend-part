@@ -12,6 +12,7 @@ import ButtonComponent from "@/components/UI/buttonComponent";
 import Link from "next/link";
 import Package from "@/components/HomePageComponents/package";
 import { Metadata } from "next";
+import Footer from "@/components/HomePageComponents/Footer";
 
 export const metadata: Metadata = {
   title: "QTP | Home",
@@ -24,7 +25,7 @@ export default function Home() {
     <main>
       <Navbar />
       <section
-        className={`flex justify-center items-center xl:min-h-[95vh] ${styles.backgroundImage} mb-20`}
+        className={`flex justify-center items-center xl:min-h-[95vh] ${styles.backgroundImage}`}
       >
         <div className="p-5 md:p-10 lg:p-20 rounded-lg bg-black/70 opacity-90 backdrop-contrast-100 text-white absolute">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center">
@@ -65,6 +66,7 @@ export default function Home() {
         <section className="mb-20">
           <Testimonials />
         </section>
+        <Footer/>
       </Container>
     </main>
   );

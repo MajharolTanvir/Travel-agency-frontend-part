@@ -10,26 +10,33 @@ import Typography from "@mui/material/Typography";
 import { IDistrict } from "@/types";
 import ButtonComponent from "../UI/buttonComponent";
 import Image from "next/image";
+import Spinner from "../UI/Spinner";
 
 const Districts = () => {
   const { data, isLoading } = useGetAllDistrictQuery({});
 
   if (isLoading) {
-    return <p>Loading......</p>;
+    return <Spinner />;
   }
 
   //@ts-ignore
   const districts = data?.district.slice(0, 8);
   const {total}: any = data?.meta
   return (
-    <div>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start">
+    <div className="my-20">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start border-b-2 inline border-violet-700">
         Visit Bangladesh
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center items-center gap-5 my-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center items-center gap-10 my-10">
         {districts?.map((district: IDistrict) => (
-          <Card key={district?.id} sx={{ maxWidth: 345 }}>
-            <Image src={district?.districtImage} alt="district image" className="w-80 h-60" width={200} height={200} />
+          <Card key={district?.id} className="w-full">
+            <Image
+              src={district?.districtImage}
+              alt="district image"
+              className="w-full h-80 md:w-full md:h-60"
+              width={200}
+              height={200}
+            />
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {district?.title}
@@ -39,8 +46,7 @@ const Districts = () => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Share</Button>
-              <Button size="small">Learn More</Button>
+              <ButtonComponent>View details</ButtonComponent>
             </CardActions>
           </Card>
         ))}

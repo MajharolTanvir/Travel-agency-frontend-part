@@ -25,11 +25,12 @@ const CarouselCompo = ({ pack }: any) => {
             alt="Place images"
             width={400}
             height={400}
-            style={{ height: "350px", width: "100%" }}
-            className="w-full h-full transform transition-transform hover:scale-110 border rounded-md"
+            className="w-44 h-44 md:w-64 md:h-60 lg:w-[420px] lg:h-80 transform transition-transform hover:scale-110 border rounded-md"
           />
           <div className="absolute inset-0 bg-black bg-opacity-70 text-white opacity-0 transition-opacity hover:opacity-100 flex items-center justify-center">
-            <h3 className="text-2xl font-bold">{p?.place?.title}</h3>
+            <h3 className="text-sm md:text-md lg:text-2xl font-bold text-center">
+              {p?.place?.title}
+            </h3>
           </div>
         </SwiperSlide>
       ))}

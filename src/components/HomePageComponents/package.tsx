@@ -20,13 +20,13 @@ const Package = () => {
   return (
     <>
       {packagePlan.length > 0 && (
-        <div className="relative ">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start mb-10">
+        <div className="relative my-20">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start mb-10 border-b-2 inline border-violet-700">
             Our packages
           </h1>
           {packagePlan.map((pack: any) => (
-            <div key={pack.id} className="mb-2 w-[1000px] h-[600px]">
-              <div className="shadow relative w-full h-full overflow-hidden">
+            <div key={pack.id} className="my-10 w-full">
+              <div className="shadow relative w-full h-[400px] md:h-[550px] lg:h-[700px] overflow-hidden">
                 <Image
                   className="w-full h-full transform transition-transform hover:scale-110 border rounded-md"
                   src={pack.thumbnail}
@@ -40,13 +40,8 @@ const Package = () => {
                   </Link>
                 </div>
               </div>
-              <div className="w-[50%] absolute bottom-0 right-0">
-                <div className="bg-black/70 p-5 rounded-md text-violet-600">
-                  <h2 className="text-3xl font-medium text-center mb-3 pb-1 border-white border-b inline-block">
-                    Visiting places
-                  </h2>
-                  <CarouselCompo pack={pack} />
-                </div>
+              <div className="w-full lg:w-[70%] xl:w-[60%] absolute bottom-0 right-0">
+                <CarouselCompo pack={pack} />
               </div>
             </div>
           ))}
