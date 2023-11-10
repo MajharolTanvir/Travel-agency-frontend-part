@@ -15,6 +15,7 @@ import { UserInfoProps } from "@/types";
 import ForumIcon from "@mui/icons-material/Forum";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
 export const DashBoardItems = (logout: any) => {
   const { role } = getUserInfo() as UserInfoProps;
@@ -32,6 +33,11 @@ export const DashBoardItems = (logout: any) => {
     },
   ];
   const traveler_SideBar = [
+    {
+      icon: <BookmarkAddedIcon />,
+      link: "/user/book-package/manage-package",
+      level: "View bookings",
+    },
     {
       icon: <ForumIcon />,
       link: "/user/feedback",
@@ -83,6 +89,11 @@ export const DashBoardItems = (logout: any) => {
       icon: <Inventory2Icon />,
       link: "/admin/package",
       level: "Manage Package",
+    },
+    {
+      icon: <BookmarkAddedIcon />,
+      link: "/user/book-package/manage-package",
+      level: "View bookings",
     },
     {
       icon: <ForumIcon />,
