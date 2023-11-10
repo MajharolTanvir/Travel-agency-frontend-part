@@ -21,7 +21,7 @@ export const bookedPackageApi = baseApi.injectEndpoints({
         method: "GET",
         params: arg,
       }),
-      transformResponse: (response: IDivision[], meta: IMeta[]) => {
+      transformResponse: (response: any, meta: IMeta[]) => {
         return {
           bookedPackage: response,
           meta,
