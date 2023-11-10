@@ -27,7 +27,7 @@ const Districts = () => {
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start border-b-2 inline border-violet-700">
         Visit Bangladesh
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center items-center gap-10 my-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center items-center gap-10 mt-10">
         {districts?.map((district: IDistrict) => (
           <Card key={district?.id} className="w-full">
             <Image
@@ -51,8 +51,7 @@ const Districts = () => {
           </Card>
         ))}
       </div>
-
-      <div className="flex justify-end items-end">
+      <div className="flex justify-end items-end mb-10">
         <ButtonComponent>View more</ButtonComponent>
       </div>
     </div>

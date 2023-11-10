@@ -54,26 +54,21 @@ const Feedback = () => {
   return (
     <div>
       {role === "super_admin" || role === "admin" ? (
-        <Box>
-          <Masonry columns={4} spacing={2}>
-            {feedbacks!
-              ?.map((feeds: any) => (
-                <Box key={feeds?.id} className="p-10 text-justify shadow">
-                  <h4 className="font-bold">
-                    <span></span>
-                    {feeds?.subject}
-                  </h4>
-                  <p>{feeds?.description}</p>
-                  <div className="flex justify-between items-center mt-2">
-                    <p>{feeds.createdAt}</p>
-                    <ButtonComponent onclick={() => handleDelete(feeds?.id)}>
-                      <DeleteIcon />
-                    </ButtonComponent>
-                  </div>
-                </Box>
-              ))
-              ?.reverse()}
-          </Masonry>
+        <Box className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {feedbacks!
+            ?.map((feeds: any) => (
+              <Box key={feeds?.id} className="p-10 text-justify shadow">
+                <h4 className="font-bold">{feeds?.subject}</h4>
+                <p>{feeds?.description}</p>
+                <p>{feeds.createdAt}</p>
+                <div className="flex justify-between items-center mt-2">
+                  <ButtonComponent onclick={() => handleDelete(feeds?.id)}>
+                    <DeleteIcon />
+                  </ButtonComponent>
+                </div>
+              </Box>
+            ))
+            ?.reverse()}
         </Box>
       ) : (
         <Box className="w-96 p-5 shadow min-h-screen flex justify-center gap-5 items-center">

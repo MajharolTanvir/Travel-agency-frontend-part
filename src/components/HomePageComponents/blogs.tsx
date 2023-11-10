@@ -21,7 +21,7 @@ const Blog = () => {
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start border-b-2 inline border-violet-700">
         Our blogs
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 w-full mx-auto gap-2 md:gap-5 lg:gap-10 shadow-md p-5 my-20">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 w-full mx-auto gap-2 md:gap-5 lg:gap-10 shadow-md p-5 mt-20">
         <div>
           <Image
             src="https://images.unsplash.com/photo-1575936123452-b67c3203c357?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"
@@ -64,7 +64,7 @@ const Blog = () => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end mb-10">
         <ButtonComponent>View all</ButtonComponent>
       </div>
     </div>
