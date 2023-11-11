@@ -36,7 +36,7 @@ const UpdateBlog = ({ params }: IDProps) => {
         Swal.fire("Blog Updated!", "Blog updated successfully!", "success");
       }
     } catch (error: any) {
-      Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Signup failed!", error.data, "error");
     }
   };
 
@@ -62,7 +62,7 @@ const UpdateBlog = ({ params }: IDProps) => {
               rows={4}
               name="description"
               label="Description"
-              value={data?.value}
+              defaultValue={data?.value}
             />
           </div>
 

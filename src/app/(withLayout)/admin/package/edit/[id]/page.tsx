@@ -50,7 +50,7 @@ const CreatePackage = ({ params }: ParamsProps) => {
         );
       }
     } catch (error: any) {
-      Swal.fire("PackagePlan failed!", error.message, "error");
+      Swal.fire("PackagePlan failed!", error.data, "error");
     }
   };
 

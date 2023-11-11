@@ -22,18 +22,14 @@ const Signup = () => {
 
   const onSubmit = async (data: any) => {
     try {
-      const res = await userSignup(data).unwrap();
-      if (res?.accessToken) {
-        Swal.fire(
-          "Signup successful!",
-          "You account has been created!",
-          "success"
-        );
-        storeUserInfo({ accessToken: res?.accessToken });
-        router.push(`/profile`);
+      const res: any = await userSignup(data).unwrap();
+      if (res) {
+        Swal.fire("Go to your email!", "Confirm your validation!", "info");
+        storeUserInfo({ accessToken: res });
+        router.push(`/auth/confirm-signup`);
       }
     } catch (error: any) {
-      Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Signup failed!", error.data, "error");
     }
   };
 

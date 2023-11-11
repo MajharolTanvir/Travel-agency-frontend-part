@@ -14,6 +14,15 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: [TagTypes.user, TagTypes.admin, TagTypes.super_admin],
     }),
 
+    confirmSignup: build.mutation({
+      query: (data) => ({
+        url: `${AUTH_URL}/confirm-signup`,
+        method: "POST",
+        data: data,
+      }),
+      invalidatesTags: [TagTypes.user, TagTypes.admin, TagTypes.super_admin],
+    }),
+
     userLogin: build.mutation({
       query: (loginData) => ({
         url: `${AUTH_URL}/signin`,
@@ -47,6 +56,7 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useUserLoginMutation,
+  useConfirmSignupMutation,
   useUserSignupMutation,
   useForgetPasswordMutation,
   useResetPasswordMutation,

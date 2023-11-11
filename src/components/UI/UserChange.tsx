@@ -25,7 +25,7 @@ const UserChange = ({ id }: any) => {
         Swal.fire("Role changed", "User role update successfully!", "success");
       }
     } catch (error: any) {
-      Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Signup failed!", error.data, "error");
     }
   };
 

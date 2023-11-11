@@ -34,7 +34,7 @@ const pages = [
 const Navbar = () => {
   const pathname = usePathname();
   const loggedIn = isLoggedIn();
-
+  
   const SignOut = () => {
     removeUserInfo(authKey);
   };

@@ -22,7 +22,7 @@ const Feedback = () => {
         Swal.fire("Feedback send!", "Feedback send successfully", "success");
       }
     } catch (error: any) {
-      Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Signup failed!", error.data, "error");
     }
   };
 

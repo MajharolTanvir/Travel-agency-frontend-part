@@ -43,7 +43,7 @@ const Feedback = () => {
         );
       }
     } catch (error: any) {
-      Swal.fire("Feedback failed!", error.message, "error");
+      Swal.fire("Feedback failed!", error.data, "error");
     }
   };
 

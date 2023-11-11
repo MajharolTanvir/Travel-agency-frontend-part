@@ -38,7 +38,7 @@ const Feedback = ({ params }: IDProps) => {
         );
       }
     } catch (error: any) {
-      Swal.fire("Feedback failed!", error.message, "error");
+      Swal.fire("Feedback failed!", error.data, "error");
     }
   };
 
@@ -66,7 +66,7 @@ const Feedback = ({ params }: IDProps) => {
                   rows={5}
                   name="description"
                   label="Description"
-                  value={data?.description}
+                  defaultValue={data?.description}
                 />
               </div>
 

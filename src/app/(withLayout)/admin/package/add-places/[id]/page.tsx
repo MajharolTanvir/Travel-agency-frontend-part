@@ -97,7 +97,7 @@ const AddPlaces = ({
         );
       }
     } catch (error: any) {
-      Swal.fire("Package place failed!", error.message, "error");
+      Swal.fire("Package place failed!", error.data, "error");
     }
   };
 
@@ -118,7 +118,7 @@ const AddPlaces = ({
         );
       }
     } catch (error: any) {
-      Swal.fire("Package place failed!", error.message, "error");
+      Swal.fire("Package place failed!", error.data, "error");
     }
   };
 

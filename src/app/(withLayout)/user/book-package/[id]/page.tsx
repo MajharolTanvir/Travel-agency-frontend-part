@@ -46,7 +46,7 @@ const BookPackage = ({ params }: IDProps) => {
       }
 
     } catch (error: any) {
-      Swal.fire("Package booked failed!", error.message, "error");
+      Swal.fire("Package booked failed!", error.data, "error");
     }
   };
 

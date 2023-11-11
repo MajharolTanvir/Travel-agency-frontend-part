@@ -36,13 +36,16 @@ instance.interceptors.response.use(
     };
     return responseObject;
   },
-  function (error) {
-    const responseObject: ResponseErrorType = {
-      statusCode: error?.response?.data?.statusCode || 500,
-      message: error?.response?.data?.message || "Something went wrong",
-      errorMessages: error?.response?.data?.errorMessages,
-    };
-    return responseObject;
+  async function (error) {
+    if (error?.response?.status === 403) {
+    } else {
+      const responseObject: ResponseErrorType = {
+        statusCode: error?.response?.data?.statusCode || 500,
+        message: error?.response?.data?.message || "Something went wrong",
+        errorMessages: error?.response?.data?.message,
+      };
+      return Promise.reject(responseObject);
+    }
   }
 );
 

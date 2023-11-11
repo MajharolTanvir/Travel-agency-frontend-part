@@ -65,7 +65,7 @@ const UpdateRoom = ({ params }: IDProps) => {
         Swal.fire("Room Updated!", "Room updated successfully!", "success");
       }
     } catch (error: any) {
-      Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Signup failed!", error.data, "error");
     }
   };
 

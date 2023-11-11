@@ -50,7 +50,7 @@ const UpdatePlace = ({ params }: IDProps) => {
         Swal.fire("Place Updated!", "Place updated successfully!", "success");
       }
     } catch (error: any) {
-      Swal.fire("Signup failed!", error.message, "error");
+      Swal.fire("Signup failed!", error.data, "error");
     }
   };
 

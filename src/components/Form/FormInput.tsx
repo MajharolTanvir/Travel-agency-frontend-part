@@ -70,6 +70,7 @@ const FormInput = ({
                   type={showPassword ? "text" : "password"}
                   value={value ? value : field.value}
                   defaultValue={defaultValue}
+                  autoComplete="off"
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -94,6 +95,7 @@ const FormInput = ({
                 {...field}
                 label={label}
                 variant="standard"
+                autoComplete="off"
                 placeholder={placeholder}
                 value={value ? value : field.value}
                 defaultValue={defaultValue}

@@ -28,7 +28,7 @@ export const DashBoardItems = (logout: any) => {
     },
     {
       icon: <LogoutIcon />,
-      link: "",
+      link: "/",
       level: <h2 onClick={logout}>Logout</h2>,
     },
   ];
@@ -46,29 +46,72 @@ export const DashBoardItems = (logout: any) => {
     ...defaultSideBar,
   ];
 
-  const district_coordinator_sideBar = [
+  const support_SideBar = [
     {
-      icon: <ForumIcon />,
-      link: "/user/feedback",
-      level: "Feedback",
+      icon: <BookmarkAddedIcon />,
+      link: "/user/book-package/manage-package",
+      level: "View bookings",
     },
     ...defaultSideBar,
   ];
 
-  const guide_sideBar = [
+  const guide_SideBar = [
     {
-      icon: <ForumIcon />,
-      link: "/user/feedback",
-      level: "Feedback",
+      icon: <BookmarkAddedIcon />,
+      link: "/user/book-package/manage-package",
+      level: "View bookings",
+    },
+    {
+      icon: <RssFeedIcon />,
+      link: "/admin/blog",
+      level: "Blog",
     },
     ...defaultSideBar,
   ];
 
-  const head_manager_sideBar = [
+  const manager_SideBar = [
+    {
+      icon: <EmojiTransportationIcon />,
+      link: "/admin/hotel",
+      level: "Manage Hotel",
+    },
+    {
+      icon: <HouseIcon />,
+      link: "/admin/room",
+      level: "Manage Room",
+    },
     {
       icon: <PlaceIcon />,
       link: "/admin/place",
       level: "Manage Place",
+    },
+    ...defaultSideBar,
+  ];
+
+  const district_coordinator_sideBar = [
+    {
+      icon: <PublicIcon />,
+      link: "/super-admin/division",
+      level: "Manage Division",
+    },
+    {
+      icon: <AddLocationAltIcon />,
+      link: "/super-admin/district",
+      level: "Manage District",
+    },
+    ...defaultSideBar,
+  ];
+
+  const admin_sideBar = [
+    {
+      icon: <PublicIcon />,
+      link: "/super-admin/division",
+      level: "Manage Division",
+    },
+    {
+      icon: <AddLocationAltIcon />,
+      link: "/super-admin/district",
+      level: "Manage District",
     },
     {
       icon: <EmojiTransportationIcon />,
@@ -81,9 +124,9 @@ export const DashBoardItems = (logout: any) => {
       level: "Manage Room",
     },
     {
-      icon: <RssFeedIcon />,
-      link: "/admin/blog",
-      level: "Blog",
+      icon: <PlaceIcon />,
+      link: "/admin/place",
+      level: "Manage Place",
     },
     {
       icon: <Inventory2Icon />,
@@ -110,28 +153,35 @@ export const DashBoardItems = (logout: any) => {
       level: "Manage Admins",
     },
     {
+      icon: <SupervisorAccountIcon />,
+      link: "/super-admin/manage-coordinator",
+      level: "Manage coordinator",
+    },
+    {
+      icon: <SupervisorAccountIcon />,
+      link: "/super-admin/manage-guide",
+      level: "Manage Guide",
+    },
+    {
       icon: <PersonIcon />,
       link: "/super-admin/manage-users",
       level: "Manage Users",
     },
     {
-      icon: <PublicIcon />,
-      link: "/super-admin/division",
-      level: "Manage Division",
+      icon: <RssFeedIcon />,
+      link: "/admin/blog",
+      level: "Manage Blog",
     },
-    {
-      icon: <AddLocationAltIcon />,
-      link: "/super-admin/district",
-      level: "Manage District",
-    },
-    ...head_manager_sideBar,
+    ...admin_sideBar,
   ];
 
   if (role == USER_ROLE.TRAVELER) return traveler_SideBar;
-  else if (role == USER_ROLE.GUIDE) return guide_sideBar;
+  else if (role == USER_ROLE.GUIDE) return guide_SideBar;
   else if (role === USER_ROLE.DISTRICT_COORDINATOR)
     return district_coordinator_sideBar;
-  else if (role === USER_ROLE.HEAD_MANAGER) return head_manager_sideBar;
+  else if (role === USER_ROLE.SUPPORT) return support_SideBar;
+  else if (role === USER_ROLE.MANAGERS) return manager_SideBar;
+  else if (role === USER_ROLE.ADMIN) return admin_sideBar;
   else if (role === USER_ROLE.SUPER_ADMIN) return superAdminSideBar;
   else {
     return [

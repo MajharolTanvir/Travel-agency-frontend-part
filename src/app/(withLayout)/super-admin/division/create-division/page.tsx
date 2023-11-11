@@ -24,7 +24,7 @@ const CreateDivision = () => {
         );
       }
     } catch (error: any) {
-      Swal.fire("Division failed!", error.message, "error");
+      Swal.fire("Division failed!", error.data, "error");
     }
   };
   return (
