@@ -11,12 +11,11 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Spinner from "@/components/UI/Spinner";
-import { useGetAllDistrictQuery } from "@/redux/api/DistrictApi";
+import { useGetAllPlaceQuery } from "@/redux/api/PlaceApi";
 
-const District = () => {
+const Places = () => {
   const query: Record<string, any> = {};
   const [searchTerm, setSearchTerm] = useState<string>("");
-
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -27,23 +26,22 @@ const District = () => {
     query["searchTerm"] = debouncedSearchTerm;
   }
 
-  const { data, isLoading } = useGetAllDistrictQuery({ ...query });
+  const { data, isLoading } = useGetAllPlaceQuery({ ...query });
   if (isLoading) {
     return <Spinner />;
   }
 
   //@ts-ignore
-  const districts = data?.district;
+  const places = data?.place;
 
   const resetFilters = () => {
     setSearchTerm("");
   };
-
   return (
     <div>
       <Navbar />
       <Container maxWidth="xl">
-        <div className="md:flex justify-between items-center gap-5 md:my-10">
+        <div className="md:flex justify-between items-center gap-5 md:my-10 my-5">
           <Input
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -58,11 +56,11 @@ const District = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {districts &&
-            districts?.map((district: any) => (
-              <Card key={district.id}>
+          {places &&
+            places?.map((place: any) => (
+              <Card key={place.id}>
                 <Image
-                  src={district?.districtImage}
+                  src={place?.placeImage}
                   alt="District image"
                   loading="lazy"
                   height={400}
@@ -71,27 +69,22 @@ const District = () => {
                 />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div">
-                    District: {district?.title}
+                    <span className="font-medium">Place: </span>
+                    {place?.title}
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    variant="body2"
+                    className="text-justify"
+                    component="div"
+                  >
+                    {place?.description.slice(0, 300)}
+                  </Typography>
+                  <Typography gutterBottom variant="h5" component="div">
+                    <span className="font-medium">District: </span>
+                    {place?.district?.title}
                   </Typography>
                 </CardContent>
-                <div className="grid grid-cols-2 gap-2">
-                  {district.Place.map((p: any) => (
-                    <div key={p.id}>
-                      <Image
-                        src={p?.placeImage}
-                        alt="Place image"
-                        loading="lazy"
-                        height={300}
-                        width={400}
-                        className="h-40 lg:h-60 lg:w-full"
-                      />
-                      <h4 className="my-2 mx-1">{p.title}</h4>
-                      <p className="mx-1 text-justify">
-                        {p.description.slice(0, 150)}
-                      </p>
-                    </div>
-                  ))}
-                </div>
               </Card>
             ))}
         </div>
@@ -100,4 +93,4 @@ const District = () => {
   );
 };
 
-export default District;
+export default Places;

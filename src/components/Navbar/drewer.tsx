@@ -13,7 +13,10 @@ type Anchor = "left";
 const pages = [
   { label: "Home", link: "/" },
   { label: "District", link: "/district" },
+  { label: "Place", link: "/place" },
+  { label: "Hotel", link: "/hotel" },
   { label: "Room", link: "/room" },
+  { label: "Package", link: "/package" },
 ];
 
 export default function TemporaryDrawer() {
@@ -49,7 +52,9 @@ export default function TemporaryDrawer() {
             <Link
               href={page.link}
               className={`${
-                pathName === page.link ? "font-bold" : "text-violet-200"
+                pathName === page.link
+                  ? "font-bold text-slate-100"
+                  : "text-violet-200"
               } `}
             >
               <Typography textAlign="center">{page.label}</Typography>

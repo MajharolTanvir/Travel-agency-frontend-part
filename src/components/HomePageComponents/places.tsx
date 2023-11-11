@@ -17,7 +17,7 @@ const Places = () => {
     return <Spinner />;
   }
 
-  const places = data?.place.slice(0, 8);
+  const places = data?.place?.slice(0, 8);
 
   return (
     <div className="my-20">

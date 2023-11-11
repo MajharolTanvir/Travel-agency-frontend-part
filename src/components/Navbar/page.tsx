@@ -26,7 +26,9 @@ const pages = [
   { label: "Home", link: "/" },
   { label: "District", link: "/district" },
   { label: "Place", link: "/place" },
+  { label: "Hotel", link: "/hotel" },
   { label: "Room", link: "/room" },
+  { label: "Package", link: "/package" },
 ];
 
 const Navbar = () => {
@@ -122,7 +124,9 @@ const Navbar = () => {
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "white", display: "block" }}
                     className={`${
-                      pathname === page.link ? "font-bold" : "text-violet-200"
+                      pathname === page.link
+                        ? "font-bold text-slate-100"
+                        : "text-violet-200"
                     } `}
                   >
                     {page.label}
@@ -132,7 +136,7 @@ const Navbar = () => {
             </Box>
 
             <Box>
-              <IconButton
+              {/* <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
@@ -140,7 +144,7 @@ const Navbar = () => {
                 <Badge badgeContent={17} color="error">
                   <NotificationsIcon />
                 </Badge>
-              </IconButton>
+              </IconButton> */}
               <Tooltip title="Open settings">
                 <IconButton
                   color="inherit"

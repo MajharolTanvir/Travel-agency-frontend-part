@@ -20,8 +20,7 @@ const Districts = () => {
   }
 
   //@ts-ignore
-  const districts = data?.district.slice(0, 8);
-  const {total}: any = data?.meta
+  const districts = data?.district?.slice(0, 8);
   return (
     <div className="my-20">
       <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start border-b-2 inline border-violet-700">

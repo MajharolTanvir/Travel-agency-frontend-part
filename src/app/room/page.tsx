@@ -11,25 +11,13 @@ import CachedIcon from "@mui/icons-material/Cached";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Image from "next/image";
 import Spinner from "@/components/UI/Spinner";
 
 const RoomPage = () => {
-  const query: Record<string, any> = {};
-
-  const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(10);
-  const [sortBy, setSortBy] = useState<string>("");
-  const [sortOrder, setSortOrder] = useState<string>("");
+  const query: Record<string, any> = {}
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  query["limit"] = limit;
-  query["page"] = page;
-  query["sortBy"] = sortBy;
-  query["sortOrder"] = sortOrder;
 
   const debouncedSearchTerm = useDebounced({
     searchQuery: searchTerm,
@@ -47,26 +35,8 @@ const RoomPage = () => {
 
   //@ts-ignore
   const rooms = data?.room;
-  //@ts-ignore
-  const meta = data?.meta;
-
-  const handleChangePage = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    newPage: number
-  ) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setLimit(parseInt(event.target.value, 10));
-    setPage(0);
-  };
 
   const resetFilters = () => {
-    setSortBy("");
-    setSortOrder("");
     setSearchTerm("");
   };
 
@@ -78,13 +48,10 @@ const RoomPage = () => {
           <Input
             placeholder="Search"
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-96 lg:w-[20%]"
+            className="w-80 lg:w-[20%]"
           />
           <div className="flex justify-between items-center gap-2">
-            <Link href="/admin/room/create-room">
-              <ButtonComponent>Create Room</ButtonComponent>
-            </Link>
-            {(!!sortBy || !!sortOrder || !!searchTerm) && (
+            {(!!searchTerm) && (
               <ButtonComponent onclick={resetFilters}>
                 <CachedIcon />
               </ButtonComponent>

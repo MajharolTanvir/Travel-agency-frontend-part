@@ -5,7 +5,6 @@ import Spinner from "../UI/Spinner";
 import { useGetAllPackagePlanQuery } from "@/redux/api/PackageApi";
 import Image from "next/image";
 import CarouselCompo from "@/components/UI/Carousel";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ButtonComponent from "../UI/buttonComponent";
 import Link from "next/link";
 
@@ -15,16 +14,16 @@ const Package = () => {
     return <Spinner />;
   }
 
-  const packagePlan = data?.packagePlan.slice(0, 3);
+  const packagePlan = data?.packagePlan?.slice(0, 3);
 
   return (
     <>
-      {packagePlan.length > 0 && (
+      {packagePlan?.length > 0 && (
         <div className="relative my-20">
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-violet-700 text-start mb-10 border-b-2 inline border-violet-700">
             Our packages
           </h1>
-          {packagePlan.map((pack: any) => (
+          {packagePlan?.map((pack: any) => (
             <div key={pack.id} className="my-10 w-full">
               <div className="shadow relative w-full h-[400px] md:h-[550px] lg:h-[700px] overflow-hidden">
                 <Image
